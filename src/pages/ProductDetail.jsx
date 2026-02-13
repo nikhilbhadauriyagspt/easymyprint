@@ -71,7 +71,7 @@ export default function ProductDetail() {
   const getImages = (images) => {
     try {
       const imgs = typeof images === 'string' ? JSON.parse(images) : images;
-      return Array.isArray(imgs) ? imgs : [];
+      return Array.isArray(imgs) ? imgs.map(img => `${API_BASE_URL}/${img}`) : [];
     } catch (e) {
       return [];
     }
@@ -80,7 +80,7 @@ export default function ProductDetail() {
   const getImagePath = (images) => {
     try {
       const imgs = typeof images === 'string' ? JSON.parse(images) : images;
-      if (Array.isArray(imgs) && imgs.length > 0) return `/${imgs[0]}`;
+      if (Array.isArray(imgs) && imgs.length > 0) return `${API_BASE_URL}/${imgs[0]}`;
     } catch (e) { }
     return "https://via.placeholder.com/400x400?text=No+Image";
   };
@@ -104,7 +104,7 @@ export default function ProductDetail() {
   }
 
   const images = getImages(product.images);
-  const mainImage = images.length > 0 ? `/${images[activeImage]}` : "https://via.placeholder.com/600x600?text=No+Image";
+  const mainImage = images.length > 0 ? images[activeImage] : "https://via.placeholder.com/600x600?text=No+Image";
 
   return (
     <div className="bg-white min-h-screen pt-32 pb-20 font-urbanist">
@@ -153,7 +153,7 @@ export default function ProductDetail() {
                     onClick={() => setActiveImage(idx)}
                     className={`h-24 w-24 rounded-2xl border-2 flex-shrink-0 flex items-center justify-center p-4 transition-all ${activeImage === idx ? 'border-blue-600 bg-blue-50/50' : 'border-gray-100 hover:border-gray-300'}`}
                   >
-                    <img src={`/${img}`} alt="" className="max-w-full max-h-full object-contain mix-blend-multiply" />
+                    <img src={img} alt="" className="max-w-full max-h-full object-contain mix-blend-multiply" />
                   </button>
                 ))}
               </div>
