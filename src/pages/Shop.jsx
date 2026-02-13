@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useSearchParams, Link, useParams } from 'react-router-dom';
+import SEO from '@/components/SEO';
 import { useCart } from '../context/CartContext';
 import { 
   Search, 
@@ -88,6 +89,10 @@ export default function Shop() {
 
   return (
     <div className="bg-white min-h-screen font-urbanist">
+      <SEO 
+        title="Premium Catalog | Laptops, Printers & More" 
+        description="Browse our authorized catalog of high-performance laptops, professional printers, and genuine accessories."
+      />
       
       {/* --- REFINED HEADER --- */}
       <div className="pt-40 pb-12 px-6 md:px-10 lg:px-12 bg-white">

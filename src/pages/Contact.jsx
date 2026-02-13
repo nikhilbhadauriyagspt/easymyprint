@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
+import SEO from '@/components/SEO';
 import { Mail, Phone, MapPin, Send, MessageCircle, Clock, ShieldCheck, ArrowRight, Loader2, CheckCircle2 } from 'lucide-react';
 import API_BASE_URL from '../config';
 
@@ -41,6 +42,10 @@ export default function Contact() {
 
   return (
     <div className="bg-white min-h-screen pt-32 pb-20 font-urbanist overflow-hidden">
+      <SEO 
+        title="Contact Us | Expert Tech Support" 
+        description="Get in touch with PrimeFix Solutions for technical support, bulk orders, or product inquiries. Our experts are here to help."
+      />
       
       {/* Header */}
       <div className="max-w-[1400px] mx-auto px-6 md:px-10 mb-24">

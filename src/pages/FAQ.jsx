@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import SEO from '@/components/SEO';
 import { ChevronDown, HelpCircle, Search, MessageCircle, Mail, Phone, Plus, Minus } from 'lucide-react';
 
 const faqData = [
@@ -125,6 +126,10 @@ export default function FAQ() {
 
   return (
     <div className="min-h-screen bg-gray-50/50 pt-32 pb-20 font-urbanist">
+      <SEO 
+        title="FAQ | Support & Assistance" 
+        description="Find answers to common questions about orders, shipping, products, and technical support at PrimeFix Solutions."
+      />
       <div className="max-w-[1400px] mx-auto px-6 md:px-10">
         
         {/* Header */}

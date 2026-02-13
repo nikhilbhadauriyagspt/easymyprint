@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
+import SEO from '@/components/SEO';
 import { useCart } from '../context/CartContext';
 import { 
   ShoppingBag, 
@@ -107,6 +108,10 @@ export default function ProductDetail() {
 
   return (
     <div className="bg-white min-h-screen pt-32 pb-20 font-urbanist">
+      <SEO 
+        title={product.name} 
+        description={product.description?.substring(0, 160)}
+      />
       <div className="max-w-[1400px] mx-auto px-6 md:px-10">
         
         {/* Breadcrumbs */}

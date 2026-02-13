@@ -1,4 +1,5 @@
 import Hero from "@/components/Hero";
+import SEO from "@/components/SEO";
 import Features from "@/components/Features";
 import Collections from "@/components/Collections";
 import ShopByCategory from "@/components/ShopByCategory";
@@ -81,6 +82,10 @@ export default function Home() {
 
   return (
     <div className="bg-white font-snpro overflow-x-hidden text-slate-900">
+      <SEO 
+        title="Authorized HP Partner | Premium Laptops & Printers" 
+        description="Premium destination for authorized HP laptops, printers, and tech accessories. Delivering excellence in tech solutions across the USA."
+      />
       
       {/* 1. HERO - Entrance */}
       <Hero />

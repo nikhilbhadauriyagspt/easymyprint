@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import SEO from '@/components/SEO';
 import { ShieldCheck, Zap, Heart, Globe, Award, Users, ChevronRight, Laptop, Printer, Package, Wrench, Leaf, MapPin, Mail, Phone, ArrowUpRight, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import banner1 from "@/assets/bannerr/banner1.jpg";
@@ -7,6 +8,10 @@ import banner1 from "@/assets/bannerr/banner1.jpg";
 export default function About() {
   return (
     <div className="bg-white min-h-screen font-urbanist overflow-hidden">
+      <SEO 
+        title="About Our Journey | Authorized HP Excellence" 
+        description="Learn about PrimeFix Solutions, our vision to redefine tech experience, and our commitment as an authorized HP partner."
+      />
 
       {/* Hero Section - Full Background */}
       <section className="relative h-[80vh] w-full flex items-center overflow-hidden">
