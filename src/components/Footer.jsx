@@ -101,7 +101,7 @@ export default function Footer() {
                 <li><Link to="/about" className="text-slate-500 hover:text-black transition-colors text-sm font-bold">About Us</Link></li>
                 <li><Link to="/contact" className="text-slate-500 hover:text-black transition-colors text-sm font-bold">Contact Us</Link></li>
                 <li><Link to="/orders" className="text-slate-500 hover:text-black transition-colors text-sm font-bold">Track Order</Link></li>
-                <li><Link to="/faq" className="text-slate-500 hover:text-black transition-colors text-sm font-bold">Technical FAQ</Link></li>
+                <li><Link to="/faq" className="text-slate-500 hover:text-black transition-colors text-sm font-bold">FAQ</Link></li>
               </ul>
             </div>
             <div>
