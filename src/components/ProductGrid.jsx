@@ -3,6 +3,7 @@ import { ShoppingBag, Heart, ArrowRight, Check } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useCart } from "../context/CartContext";
 import { useState } from "react";
+import API_BASE_URL from "../config";
 
 export default function ProductGrid({ products = [] }) {
   const { addToCart, toggleWishlist, isInWishlist } = useCart();
@@ -19,7 +20,7 @@ export default function ProductGrid({ products = [] }) {
     try {
       const imgs = typeof images === 'string' ? JSON.parse(images) : images;
       if (Array.isArray(imgs) && imgs.length > 0) {
-        return `/${imgs[0]}`;
+        return `${API_BASE_URL}/${imgs[0]}`;
       }
     } catch (e) { }
     return "https://via.placeholder.com/400x400?text=No+Image";

@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/carousel";
 import Autoplay from "embla-carousel-autoplay";
 import * as React from "react";
+import API_BASE_URL from "../config";
 
 export default function TheVault({ products = [] }) {
   const navigate = useNavigate();
@@ -20,7 +21,7 @@ export default function TheVault({ products = [] }) {
   const getImagePath = (images) => {
     try {
       const imgs = typeof images === 'string' ? JSON.parse(images) : images;
-      if (Array.isArray(imgs) && imgs.length > 0) return `/${imgs[0]}`;
+      if (Array.isArray(imgs) && imgs.length > 0) return `${API_BASE_URL}/${imgs[0]}`;
     } catch (e) { }
     return "https://via.placeholder.com/400x400?text=No+Image";
   };
@@ -41,7 +42,7 @@ export default function TheVault({ products = [] }) {
           </div>
           
           <div className="flex items-center gap-4 pb-1">
-            <Link to="/accessories" className="text-xs font-black uppercase tracking-widest text-slate-900 hover:text-blue-600 transition-colors mr-4">
+            <Link to="/shop" className="text-xs font-black uppercase tracking-widest text-slate-900 hover:text-blue-600 transition-colors mr-4">
               View All
             </Link>
           </div>
@@ -59,7 +60,7 @@ export default function TheVault({ products = [] }) {
             {products.map((p, i) => (
               <CarouselItem key={p.id} className="pl-4 basis-full sm:basis-1/2 md:basis-1/3 lg:basis-1/5 xl:basis-1/6">
                 <motion.div
-                  onClick={() => navigate(`/product/${p.id}`)}
+                  onClick={() => navigate(`/product/${p.slug}`)}
                   whileHover={{ y: -4 }}
                   className="group relative bg-gray-50 rounded-2xl p-4 cursor-pointer hover:bg-white border border-transparent hover:border-gray-100 transition-all duration-300 h-full"
                 >

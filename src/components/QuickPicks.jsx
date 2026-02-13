@@ -4,6 +4,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Autoplay } from 'swiper/modules';
 import { Link, useNavigate } from "react-router-dom";
 import { useCart } from "../context/CartContext";
+import API_BASE_URL from "../config";
 import 'swiper/css';
 
 export default function QuickPicks({ products = [] }) {
@@ -12,7 +13,7 @@ export default function QuickPicks({ products = [] }) {
   const getImagePath = (images) => {
     try {
       const imgs = typeof images === 'string' ? JSON.parse(images) : images;
-      if (Array.isArray(imgs) && imgs.length > 0) return `/${imgs[0]}`;
+      if (Array.isArray(imgs) && imgs.length > 0) return `${API_BASE_URL}/${imgs[0]}`;
     } catch (e) { }
     return "https://via.placeholder.com/400x400?text=No+Image";
   };
