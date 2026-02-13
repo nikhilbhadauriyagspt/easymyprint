@@ -21,7 +21,7 @@ import API_BASE_URL from '../config';
 export default function ProductDetail() {
   const { addToCart, toggleWishlist, isInWishlist } = useCart();
   const [isAdded, setIsAdded] = useState(false);
-  const { id } = useParams();
+  const { slug } = useParams();
 
   const handleAddToCart = () => {
     addToCart(product, quantity);
@@ -37,7 +37,7 @@ export default function ProductDetail() {
   useEffect(() => {
     window.scrollTo(0, 0);
     setLoading(true);
-    fetch(`${API_BASE_URL}/products/${id}`)
+    fetch(`${API_BASE_URL}/products/${slug}`)
       .then(res => res.json())
       .then(data => {
         if (data.status === 'success') {
@@ -66,7 +66,7 @@ export default function ProductDetail() {
         setLoading(false);
       })
       .catch(() => setLoading(false));
-  }, [id]);
+  }, [slug]);
 
   const getImages = (images) => {
     try {
@@ -268,7 +268,7 @@ export default function ProductDetail() {
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-6">
               {relatedProducts.map((p) => (
                 <Link 
-                  to={`/product/${p.id}`} 
+                  to={`/product/${p.slug}`} 
                   key={p.id} 
                   className="group"
                   onClick={() => window.scrollTo(0, 0)}

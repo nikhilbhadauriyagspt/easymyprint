@@ -1,13 +1,28 @@
 import { Link } from 'react-router-dom';
 import { Facebook, Twitter, Instagram, Youtube, ArrowUpRight, Globe, Mail, Loader2, CheckCircle2, MapPin, Phone, ShieldCheck } from 'lucide-react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useCart } from '../context/CartContext';
 import API_BASE_URL from '../config';
 
 export default function Footer() {
   const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(false);
+  const [categories, setCategories] = useState([]);
   const { showToast } = useCart();
+
+  useEffect(() => {
+    fetch(`${API_BASE_URL}/categories`)
+      .then(res => res.json())
+      .then(data => {
+        if (data.status === 'success') {
+          // Flatten: Get parents and their children
+          const flat = data.data.flatMap(cat => [cat, ...(cat.children || [])]);
+          // Unique by slug and limit to 6
+          const unique = Array.from(new Map(flat.map(item => [item.slug, item])).values()).slice(0, 6);
+          setCategories(unique);
+        }
+      });
+  }, []);
 
   const handleSubscribe = async (e) => {
     e.preventDefault();
@@ -64,11 +79,20 @@ export default function Footer() {
             <div>
               <h4 className="font-urbanist text-[10px] font-black tracking-[0.3em] uppercase text-blue-600 mb-8">Product Line</h4>
               <ul className="space-y-4">
-                <li><Link to="/category/laptop-computers" className="text-slate-500 hover:text-black transition-colors text-sm font-bold">MacBook Series</Link></li>
-                <li><Link to="/category/laptop-computers" className="text-slate-500 hover:text-black transition-colors text-sm font-bold">Gaming Rigs</Link></li>
-                <li><Link to="/category/printers" className="text-slate-500 hover:text-black transition-colors text-sm font-bold">Business Printers</Link></li>
-                <li><Link to="/shop" className="text-slate-500 hover:text-black transition-colors text-sm font-bold">Custom Build</Link></li>
-                <li><Link to="/shop" className="text-slate-500 hover:text-black transition-colors text-sm font-bold">Refurbished</Link></li>
+                {categories.length > 0 ? (
+                  categories.map(cat => (
+                    <li key={cat.id}>
+                      <Link to={`/shop?category=${cat.slug}`} className="text-slate-500 hover:text-black transition-colors text-sm font-bold truncate block">
+                        {cat.name}
+                      </Link>
+                    </li>
+                  ))
+                ) : (
+                  <>
+                    <li><Link to="/shop" className="text-slate-500 hover:text-black transition-colors text-sm font-bold">Latest Models</Link></li>
+                    <li><Link to="/shop" className="text-slate-500 hover:text-black transition-colors text-sm font-bold">Featured Tech</Link></li>
+                  </>
+                )}
               </ul>
             </div>
             <div>
@@ -122,19 +146,35 @@ export default function Footer() {
 
         {/* Contact Row */}
         <div className="py-12 border-t border-gray-100 mb-12">
-          <h4 className="font-urbanist text-[10px] font-black tracking-[0.3em] uppercase text-blue-600 mb-8">Contact Information</h4>
-          <div className="flex flex-col md:flex-row md:items-center gap-8 md:gap-16 text-slate-500 text-sm font-bold">
-            <div className="flex items-start gap-3">
-              <MapPin size={18} className="text-blue-600 shrink-0 mt-0.5" />
-              <span className="leading-relaxed">3014 Dauphine St Ste A PM3 357287, New Orleans, LA 70117, USA</span>
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            <div className="lg:col-span-7">
+              <h4 className="font-urbanist text-[10px] font-black tracking-[0.3em] uppercase text-blue-600 mb-8">Contact Information</h4>
+              <div className="flex flex-col md:flex-row md:items-center gap-8 md:gap-12 text-slate-500 text-sm font-bold">
+                <div className="flex items-start gap-3">
+                  <MapPin size={18} className="text-blue-600 shrink-0 mt-0.5" />
+                  <span className="leading-relaxed">3014 Dauphine St Ste A PM3 357287, New Orleans, LA 70117, USA</span>
+                </div>
+                <div className="flex items-center gap-3 shrink-0">
+                  <Mail size={18} className="text-blue-600 shrink-0" />
+                  <a href="mailto:info@primefixsolutions.co" className="hover:text-black transition-colors">info@primefixsolutions.co</a>
+                </div>
+                <div className="flex items-center gap-3 shrink-0">
+                  <Phone size={18} className="text-blue-600 shrink-0" />
+                  <a href="tel:+14025089751" className="hover:text-black transition-colors">+1 (402) 508-9751</a>
+                </div>
+              </div>
             </div>
-            <div className="flex items-center gap-3 shrink-0">
-              <Mail size={18} className="text-blue-600 shrink-0" />
-              <a href="mailto:info@primefixsolutions.co" className="hover:text-black transition-colors">info@primefixsolutions.co</a>
-            </div>
-            <div className="flex items-center gap-3 shrink-0">
-              <Phone size={18} className="text-blue-600 shrink-0" />
-              <a href="tel:+14025089751" className="hover:text-black transition-colors">+1 (402) 508-9751</a>
+            <div className="lg:col-span-5 h-[200px] rounded-[2rem] overflow-hidden border border-gray-100 shadow-inner">
+              <iframe 
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3457.142851421456!2d-90.0414416!3d29.9610111!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8620a61660666667%3A0x6666666666666666!2s3014%20Dauphine%20St%2C%20New%20Orleans%2C%20LA%2070117%2C%20USA!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin" 
+                width="100%" 
+                height="100%" 
+                style={{ border: 0 }} 
+                allowFullScreen="" 
+                loading="lazy" 
+                referrerPolicy="no-referrer-when-downgrade"
+                className="grayscale opacity-80 hover:grayscale-0 hover:opacity-100 transition-all duration-700"
+              ></iframe>
             </div>
           </div>
         </div>

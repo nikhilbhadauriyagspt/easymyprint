@@ -54,12 +54,12 @@ export default function Collections() {
               From ultra-thin portables to heavy-duty gaming rigs.
             </p>
             <div className="flex items-center gap-2 md:gap-3">
-              <Link to="/category/laptop-computers">
+              <Link to="/shop?category=laptop-computers">
                 <Button size="lg" className="bg-black hover:bg-blue-600 text-white rounded-xl md:rounded-2xl px-6 md:px-10 h-12 md:h-14 font-black text-[10px] md:text-xs tracking-widest transition-all shadow-2xl shadow-black/10">
                   EXPLORE MODELS
                 </Button>
               </Link>
-              <Link to="/category/laptop-computers" className="h-12 w-12 md:h-14 md:w-14 rounded-xl md:rounded-2xl bg-white border border-gray-200 flex items-center justify-center hover:bg-blue-50 hover:border-blue-200 transition-all shadow-sm">
+              <Link to="/shop?category=laptop-computers" className="h-12 w-12 md:h-14 md:w-14 rounded-xl md:rounded-2xl bg-white border border-gray-200 flex items-center justify-center hover:bg-blue-50 hover:border-blue-200 transition-all shadow-sm">
                 <ChevronRight size={20} md:size={24} className="text-black" />
               </Link>
             </div>
@@ -94,12 +94,12 @@ export default function Collections() {
               Precision scanning and high-speed printing solutions.
             </p>
             <div className="flex items-center gap-2 md:gap-3">
-              <Link to="/category/printers">
+              <Link to="/shop?category=printers">
                 <Button size="lg" className="bg-black hover:bg-purple-600 text-white rounded-xl md:rounded-2xl px-6 md:px-10 h-12 md:h-14 font-black text-[10px] md:text-xs tracking-widest transition-all shadow-2xl shadow-black/10">
                   VIEW CATALOG
                 </Button>
               </Link>
-              <Link to="/category/printers" className="h-12 w-12 md:h-14 md:w-14 rounded-xl md:rounded-2xl bg-white border border-gray-200 flex items-center justify-center hover:bg-blue-50 hover:border-purple-200 transition-all shadow-sm">
+              <Link to="/shop?category=printers" className="h-12 w-12 md:h-14 md:w-14 rounded-xl md:rounded-2xl bg-white border border-gray-100 flex items-center justify-center hover:bg-blue-50 hover:border-purple-200 transition-all shadow-sm">
                 <ChevronRight size={20} md:size={24} className="text-black" />
               </Link>
             </div>

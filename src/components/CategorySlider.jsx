@@ -68,7 +68,7 @@ export default function CategorySlider({ title, subtitle, products = [], bgColor
                 transition={{ delay: i * 0.05 }}
                 className="group cursor-pointer"
               >
-                <Link to={`/product/${p.id}`} className="relative aspect-square bg-white rounded-2xl overflow-hidden mb-3 border border-gray-100 group-hover:border-blue-500/20 transition-all duration-300 flex items-center justify-center p-6">
+                <Link to={`/product/${p.slug}`} className="relative aspect-square bg-white rounded-2xl overflow-hidden mb-3 border border-gray-100 group-hover:border-blue-500/20 transition-all duration-300 flex items-center justify-center p-6">
                   <img 
                     src={getImagePath(p.images)} 
                     alt={p.name}
@@ -101,7 +101,7 @@ export default function CategorySlider({ title, subtitle, products = [], bgColor
                   </div>
                 </Link>
                 <div className="px-1">
-                  <Link to={`/product/${p.id}`}>
+                  <Link to={`/product/${p.slug}`}>
                     <h3 className="text-[11px] font-bold text-slate-800 group-hover:text-blue-600 transition-colors line-clamp-1 mb-0.5">{p.name}</h3>
                   </Link>
                   <div className="flex items-center justify-between">

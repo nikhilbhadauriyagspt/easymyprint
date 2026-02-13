@@ -63,7 +63,7 @@ export default function ShopByCategory({ categories = [] }) {
         >
           {subcategories.map((item, i) => (
             <SwiperSlide key={item.id}>
-              <Link to={`/category/${item.slug}`}>
+              <Link to={`/shop?category=${item.slug}`}>
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}

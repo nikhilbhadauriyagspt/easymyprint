@@ -43,7 +43,7 @@ export default function BrandShowcase({ brands = [] }) {
               {doubleBrands.map((brand, i) => (
                 <Link 
                   key={`${brand.id}-${i}`}
-                  to={`/brand/${brand.name.toLowerCase()}`}
+                  to={`/shop?brand=${encodeURIComponent(brand.name)}`}
                   className="group"
                 >
                   <div className="h-16 px-8 flex items-center gap-4 bg-white/5 backdrop-blur-md border border-white/10 rounded-full hover:bg-blue-600 transition-all duration-500 hover:border-blue-400 hover:scale-105 cursor-pointer">

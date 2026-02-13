@@ -63,7 +63,7 @@ export default function Wishlist() {
                     <Trash2 size={16} />
                   </button>
 
-                  <Link to={`/product/${p.id}`} className="w-full h-full flex items-center justify-center">
+                  <Link to={`/product/${p.slug}`} className="w-full h-full flex items-center justify-center">
                     <img 
                       src={getImagePath(p.images)} 
                       alt={p.name}
@@ -82,7 +82,7 @@ export default function Wishlist() {
                 </div>
 
                 <div className="px-1 flex-1 flex flex-col">
-                  <Link to={`/product/${p.id}`}>
+                  <Link to={`/product/${p.slug}`}>
                     <h3 className="text-[11px] font-bold text-slate-800 group-hover:text-blue-600 transition-colors uppercase tracking-tight leading-tight line-clamp-1 mb-1">{p.name}</h3>
                   </Link>
                   <span className="text-sm font-black text-slate-900">${p.price}</span>

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useSearchParams, Link, useParams } from 'react-router-dom';
+import { useSearchParams, Link, useParams, useNavigate } from 'react-router-dom';
 import SEO from '@/components/SEO';
 import { useCart } from '../context/CartContext';
 import { 
@@ -23,6 +23,7 @@ export default function Shop() {
   const { addToCart, toggleWishlist, isInWishlist } = useCart();
   const [addedItems, setAddedItems] = useState({});
   const { category: pathCategory, brand: pathBrand } = useParams();
+  const navigate = useNavigate();
 
   const handleAddToCart = (product) => {
     addToCart(product);
@@ -39,9 +40,9 @@ export default function Shop() {
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [total, setTotal] = useState(0);
 
-  // Filters - prioritize path params then search params
-  const category = pathCategory || searchParams.get('category') || '';
-  const brand = pathBrand || searchParams.get('brand') || '';
+  // Filters - prioritze search params
+  const category = searchParams.get('category') || pathCategory || '';
+  const brand = searchParams.get('brand') || pathBrand || '';
   const sort = searchParams.get('sort') || 'newest';
   const search = searchParams.get('search') || '';
 
@@ -51,13 +52,20 @@ export default function Shop() {
   }, []);
 
   useEffect(() => {
+    // If we are on /category/:category or /brand/:brand, redirect to /shop with query params
+    // to unify the experience and fix the "can't remove filter" issue.
+    if (pathCategory) {
+      navigate(`/shop?category=${pathCategory}`, { replace: true });
+      return;
+    }
+    if (pathBrand) {
+      navigate(`/shop?brand=${encodeURIComponent(pathBrand)}`, { replace: true });
+      return;
+    }
+
     setLoading(true);
     const params = new URLSearchParams(searchParams);
     params.set('limit', '1000');
-    
-    // Ensure path params are included in the API call
-    if (pathCategory) params.set('category', pathCategory);
-    if (pathBrand) params.set('brand', pathBrand);
     
     fetch(`${API_BASE_URL}/products?${params.toString()}`)
       .then(res => res.json())
@@ -69,14 +77,21 @@ export default function Shop() {
         setLoading(false);
       })
       .catch(() => setLoading(false));
-  }, [searchParams, pathCategory, pathBrand]);
+  }, [searchParams, pathCategory, pathBrand, navigate]);
 
   const updateFilter = (key, value) => {
     const newParams = new URLSearchParams(searchParams);
+    
+    // If we are on a path-based route (e.g., /category/:category), 
+    // and we update filters, we should move to the unified /shop route
+    if (pathCategory && !newParams.get('category')) newParams.set('category', pathCategory);
+    if (pathBrand && !newParams.get('brand')) newParams.set('brand', pathBrand);
+
     if (value) newParams.set(key, value);
     else newParams.delete(key);
+    
     newParams.set('page', '1');
-    setSearchParams(newParams);
+    navigate(`/shop?${newParams.toString()}`);
   };
 
   const getImagePath = (images) => {
@@ -281,7 +296,7 @@ export default function Shop() {
                    <p className="text-[10px] font-black uppercase tracking-[0.2em] mb-2 text-blue-400">Need Help?</p>
                    <h5 className="text-lg font-black leading-tight mb-6">Find the perfect tech for your workflow.</h5>
                    <button 
-                     onClick={() => setSearchParams({})}
+                     onClick={() => navigate('/shop')}
                      className="w-full py-4 bg-white text-slate-900 rounded-2xl text-[10px] font-black uppercase tracking-widest hover:bg-blue-600 hover:text-white transition-all shadow-xl shadow-white/5"
                    >
                      Reset All Filters
@@ -305,7 +320,7 @@ export default function Shop() {
           <div className="flex flex-col items-center justify-center py-48 text-center">
             <h2 className="text-4xl font-black text-slate-900 tracking-tighter uppercase mb-4">No results found</h2>
             <p className="text-slate-400 text-sm font-bold uppercase tracking-widest mb-10">Try a different search or filter combination</p>
-            <button onClick={() => setSearchParams({})} className="px-10 py-4 bg-black text-white rounded-full text-[10px] font-black uppercase tracking-[0.2em]">Clear Filters</button>
+            <button onClick={() => navigate('/shop')} className="px-10 py-4 bg-black text-white rounded-full text-[10px] font-black uppercase tracking-[0.2em]">Clear Filters</button>
           </div>
         ) : (
           <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-x-6 gap-y-16">
@@ -317,7 +332,7 @@ export default function Shop() {
                 transition={{ delay: (i % 12) * 0.03 }}
                 className="group flex flex-col"
               >
-                <Link to={`/product/${p.id}`} className="relative aspect-square bg-white rounded-[2rem] border border-gray-100 group-hover:border-blue-500/20 group-hover:shadow-[0_30px_60px_rgba(59,130,246,0.08)] transition-all duration-500 flex items-center justify-center p-8 overflow-hidden mb-6">
+                <Link to={`/product/${p.slug}`} className="relative aspect-square bg-white rounded-[2rem] border border-gray-100 group-hover:border-blue-500/20 group-hover:shadow-[0_30px_60px_rgba(59,130,246,0.08)] transition-all duration-500 flex items-center justify-center p-8 overflow-hidden mb-6">
                   <span className="absolute top-4 left-4 bg-slate-900 text-white px-2.5 py-1 text-[7px] font-black uppercase tracking-widest rounded-full z-10">
                     {p.brand_name || 'Premium'}
                   </span>
@@ -359,7 +374,7 @@ export default function Shop() {
                 </Link>
 
                 <div className="px-1 flex-1 flex flex-col">
-                  <Link to={`/product/${p.id}`}>
+                  <Link to={`/product/${p.slug}`}>
                     <h3 className="text-[11px] font-bold text-slate-800 group-hover:text-blue-600 transition-colors uppercase tracking-tight leading-tight line-clamp-2 mb-2">{p.name}</h3>
                   </Link>
                   <div className="mt-auto flex items-center justify-between border-t border-gray-50 pt-3">

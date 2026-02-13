@@ -66,7 +66,7 @@ function App() {
         <Route path="/shop" element={<ShopLayout><Shop /></ShopLayout>} />
         <Route path="/category/:category" element={<ShopLayout><Shop /></ShopLayout>} />
         <Route path="/brand/:brand" element={<ShopLayout><Shop /></ShopLayout>} />
-        <Route path="/product/:id" element={<ShopLayout><ProductDetail /></ShopLayout>} />
+        <Route path="/product/:slug" element={<ShopLayout><ProductDetail /></ShopLayout>} />
         <Route path="/about" element={<ShopLayout><About /></ShopLayout>} />
         <Route path="/contact" element={<ShopLayout><Contact /></ShopLayout>} />
         <Route path="/cart" element={<ShopLayout><Cart /></ShopLayout>} />

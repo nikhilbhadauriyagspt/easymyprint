@@ -65,7 +65,7 @@ export default function BestSellers({ products = [] }) {
         {products.map((p, i) => (
             <SwiperSlide key={p.id}>
               <motion.div className="bg-white p-4 rounded-[2rem] border border-gray-100 hover:border-blue-500/20 transition-all duration-500 group h-full">
-                <Link to={`/product/${p.id}`} className="relative aspect-square rounded-[1.5rem] bg-gray-50 overflow-hidden mb-4 p-6 flex items-center justify-center block">
+                <Link to={`/product/${p.slug}`} className="relative aspect-square rounded-[1.5rem] bg-gray-50 overflow-hidden mb-4 p-6 flex items-center justify-center block">
                   <span className="absolute top-3 left-3 bg-white px-2 py-1 rounded-lg text-[8px] font-black uppercase tracking-widest z-10 shadow-sm">
                     {p.brand_name || 'Popular'}
                   </span>
@@ -83,7 +83,7 @@ export default function BestSellers({ products = [] }) {
                 </Link>
                 
                 <div className="px-2">
-                  <Link to={`/product/${p.id}`}>
+                  <Link to={`/product/${p.slug}`}>
                     <h3 className="font-black text-slate-900 text-sm mb-1 line-clamp-1">{p.name}</h3>
                   </Link>
                   <div className="flex items-center justify-between">
