@@ -79,15 +79,6 @@ export default function Home() {
     fetchData();
   }, []);
 
-  if (data.loading) {
-    return (
-      <div className="h-screen w-full flex flex-col items-center justify-center bg-white font-urbanist">
-        <Loader2 className="animate-spin h-12 w-12 text-blue-600 mb-4" />
-        <p className="font-black text-xs uppercase tracking-[0.3em] text-slate-400">Initializing Experience</p>
-      </div>
-    );
-  }
-
   return (
     <div className="bg-white font-snpro overflow-x-hidden text-slate-900">
       
