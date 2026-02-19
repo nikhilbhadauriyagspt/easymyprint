@@ -207,13 +207,11 @@ export default function Hero() {
                                 <div className="absolute inset-0 bg-gradient-to-r from-blue-600/0 via-blue-600/0 to-blue-600/0 group-hover/item:via-blue-600/[0.05] transition-all duration-700" />
 
                                 <div className="relative flex items-center justify-between">
-                                   <div className="flex items-center gap-8">
-                                      <div className="flex flex-col">
-                                         <span className="text-[8px] font-mono text-blue-600 mb-1">NODE_0{i+1}</span>
-                                         <span className="text-[14px] font-black text-white uppercase tracking-[0.2em]">{spec}</span>
-                                      </div>
-                                   </div>
-                                   
+                                                                   <div className="flex items-center gap-8">
+                                                                      <div className="flex flex-col">
+                                                                         <span className="text-[14px] font-black text-white uppercase tracking-[0.2em]">{spec}</span>
+                                                                      </div>
+                                                                   </div>                                   
                                    <div className="flex flex-col items-end">
                                       <Activity size={14} className="text-blue-600/20 group-hover/item:text-blue-600 group-hover/item:animate-pulse transition-colors" />
                                       <span className="text-[7px] font-black text-white/10 uppercase mt-2 tracking-widest">Verified</span>
