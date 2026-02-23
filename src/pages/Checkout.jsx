@@ -44,7 +44,8 @@ export default function Checkout() {
         user_id: user?.id,
         total: finalTotal,
         items: cart,
-        payment_details: paymentDetails
+        payment_details: paymentDetails,
+        website_domain: window.location.hostname
       };
 
       const response = await fetch(`${API_BASE_URL}/orders`, {
