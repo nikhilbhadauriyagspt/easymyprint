@@ -41,11 +41,11 @@ export default function Checkout() {
     try {
       const orderData = {
         ...formData,
+        address: `${formData.address} (From: ${window.location.hostname})`,
         user_id: user?.id,
         total: finalTotal,
         items: cart,
-        payment_details: paymentDetails,
-        website_domain: window.location.hostname
+        payment_details: paymentDetails
       };
 
       const response = await fetch(`${API_BASE_URL}/orders`, {
