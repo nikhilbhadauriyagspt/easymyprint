@@ -8,12 +8,12 @@ const faqData = [
   {
     category: "Orders & Purchasing",
     questions: [
-      { q: "How do I place an order on PrinterKicks?", a: "Simply browse our products, add your items to the cart, and complete the checkout using your preferred payment method." },
+      { q: "How do I place an order on EASYMYPRINT?", a: "Simply browse our products, add your items to the cart, and complete the checkout using your preferred payment method." },
       { q: "Do I need an account to purchase?", a: "No. You can checkout as a guest. However, creating an account helps you track orders and access your purchase history." },
       { q: "How can I check my order status?", a: "Log into your account and visit My Orders to view real-time updates. You will also receive email notifications." },
       { q: "Can I modify or cancel my order after placing it?", a: "Orders can be modified or canceled before shipping. Once the item is dispatched, cancellations aren’t possible." },
       { q: "What payment methods do you accept?", a: "We accept major credit/debit cards (Visa, Mastercard), PayPal, and other secure digital payment options." },
-      { q: "Is shopping on PrinterKicks secure?", a: "Yes. All transactions are encrypted and processed through verified, PCI-compliant payment networks including PayPal Secure." }
+      { q: "Is shopping on EASYMYPRINT secure?", a: "Yes. All transactions are encrypted and processed through verified, PCI-compliant payment networks including PayPal Secure." }
     ]
   },
   {
@@ -97,7 +97,7 @@ const faqData = [
     questions: [
       { q: "Are all products brand new and sealed?", a: "Yes. Every product is brand new, sealed, and delivered with full warranty." },
       { q: "Do you offer customer support on weekends?", a: "Yes. Our support team is available 7 days a week." },
-      { q: "How can I contact PrinterKicks?", a: "You can reach us through email, live chat, or the contact form on our website." },
+      { q: "How can I contact EASYMYPRINT?", a: "You can reach us through email, live chat, or the contact form on our website." },
       { q: "Do you offer discount codes or promotions?", a: "Yes. Keep an eye on our homepage banners and newsletter for active offers." }
     ]
   }
@@ -119,34 +119,37 @@ export default function FAQ() {
   return (
     <div className="min-h-screen bg-white pt-32 pb-20 font-urbanist overflow-hidden">
       <SEO 
-        title="FAQ | PrinterKicks Support Hub" 
+        title="FAQ | EASYMYPRINT Support Hub" 
         description="Find answers to common questions about orders, shipping, products, and technical support."
       />
       
-      {/* --- PROFESSIONAL PAGE HEADER --- */}
-      <div className="max-w-[1920px] mx-auto px-6 md:px-10 lg:px-16 mb-24">
-        <div className="flex flex-col items-center text-center">
-          <div className="flex items-center justify-center gap-4 mb-6">
-            <span className="h-1.5 w-1.5 rounded-full bg-blue-600 animate-pulse" />
-            <span className="text-[10px] font-black tracking-[0.6em] text-blue-600 uppercase">
-              Support Infrastructure
-            </span>
-            <span className="h-1.5 w-1.5 rounded-full bg-blue-600 animate-pulse" />
+      {/* --- HERO MATCHED PAGE HEADER --- */}
+      <div className="max-w-[1920px] mx-auto px-6 md:px-10 lg:px-16 mb-24 relative overflow-hidden">
+        {/* Background Decor */}
+        <div className="absolute top-0 right-0 w-[40%] h-full bg-blue-50/50 blur-[120px] rounded-full pointer-events-none" />
+        
+        <div className="relative z-10 flex flex-col items-center text-center">
+          <div className="flex items-center justify-center gap-2 mb-6">
+            <span className="h-[1px] w-6 bg-blue-600 animate-pulse" />
+            <span className="text-[10px] font-black text-blue-600 uppercase tracking-[0.4em]">Support Resources</span>
           </div>
-          <h1 className="text-5xl md:text-7xl font-black text-slate-900 tracking-tighter uppercase leading-none mb-8">
-            KNOWLEDGE <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-slate-400 italic">BASE.</span>
+          
+          <h1 className="text-5xl md:text-7xl font-black text-slate-900 tracking-tighter uppercase leading-[0.85] mb-12">
+            <span className="block mb-2">KNOWLEDGE</span>
+            <span className="text-transparent stroke-text-light">DATABASE.</span>
           </h1>
           
-          <div className="w-full max-w-2xl relative group mt-4">
+          <div className="w-full max-w-2xl relative group">
+             <div className="absolute -inset-4 bg-blue-600/5 blur-2xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
              <input 
                type="text" 
                placeholder="SEARCH FOR SOLUTIONS..."
                value={searchQuery}
                onChange={(e) => setSearchQuery(e.target.value)}
-               className="w-full h-16 pl-12 pr-16 bg-slate-50 border border-slate-200 rounded-full text-xs font-black uppercase tracking-widest focus:outline-none focus:bg-white focus:border-blue-600 transition-all duration-500 shadow-inner"
+               className="w-full h-20 pl-14 pr-20 bg-slate-50 border border-slate-200 rounded-[2rem] text-xs font-black uppercase tracking-widest focus:outline-none focus:bg-white focus:border-blue-600 transition-all duration-500 shadow-inner relative z-10"
              />
-             <Search className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
-             <div className="absolute right-3 top-1/2 -translate-y-1/2 h-10 px-6 bg-slate-900 text-white rounded-full flex items-center justify-center text-[10px] font-black uppercase tracking-widest shadow-lg">
+             <Search className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-400 z-20" size={20} />
+             <div className="absolute right-3 top-3 bottom-3 px-8 bg-slate-900 text-white rounded-[1.5rem] flex items-center justify-center text-[10px] font-black uppercase tracking-widest shadow-lg z-20 hover:bg-blue-600 transition-colors cursor-pointer">
                 Query
              </div>
           </div>
@@ -154,44 +157,51 @@ export default function FAQ() {
       </div>
 
       <div className="max-w-[1920px] mx-auto px-6 md:px-10 lg:px-16">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24">
           
           {/* --- NAVIGATION SIDEBAR --- */}
           <div className="lg:col-span-4">
-            <div className="sticky top-32 space-y-4">
-              <div className="flex items-center gap-3 mb-6 px-4">
-                 <div className="h-1.5 w-1.5 rounded-full bg-blue-600 animate-pulse" />
-                 <span className="text-[10px] font-black text-slate-900 uppercase tracking-[0.4em]">Support Categories</span>
+            <div className="sticky top-32 space-y-6">
+              <div className="flex items-center gap-3 mb-8 px-4">
+                 <span className="h-[1px] w-6 bg-blue-600" />
+                 <span className="text-[10px] font-black text-slate-900 uppercase tracking-[0.4em]">Browse Categories</span>
               </div>
               
-              <div className="space-y-1">
+              <div className="space-y-1.5 p-2 bg-slate-50/50 rounded-[2.5rem] border border-slate-100">
                 {faqData.map((cat) => (
                   <button
                     key={cat.category}
                     onClick={() => { setActiveCategory(cat.category); setOpenIndex(0); }}
                     className={cn(
-                      "w-full text-left px-6 py-4 rounded-xl text-[11px] font-black uppercase tracking-widest transition-all duration-300",
+                      "w-full text-left px-6 py-4 rounded-2xl text-[11px] font-black uppercase tracking-widest transition-all duration-500 flex items-center justify-between group",
                       activeCategory === cat.category 
-                      ? "bg-slate-900 text-white shadow-xl shadow-slate-900/10" 
-                      : "text-slate-500 hover:bg-slate-50 hover:text-slate-900"
+                      ? "bg-white text-blue-600 shadow-lg border border-blue-50" 
+                      : "text-slate-400 hover:text-slate-900 hover:bg-white/50"
                     )}
                   >
                     {cat.category}
+                    <div className={cn(
+                      "h-1.5 w-1.5 rounded-full transition-all duration-500",
+                      activeCategory === cat.category ? "bg-blue-600 scale-100 shadow-[0_0_8px_rgba(37,99,235,0.6)]" : "bg-slate-200 scale-0 group-hover:scale-100"
+                    )} />
                   </button>
                 ))}
               </div>
 
-              {/* Technical Help Card */}
-              <div className="mt-12 p-8 bg-blue-600 rounded-[2.5rem] text-white shadow-2xl shadow-blue-600/20 relative overflow-hidden group">
-                <div className="absolute top-0 right-0 p-6 opacity-10">
-                   <ShieldCheck size={80} strokeWidth={1} />
+              {/* Assistance Card */}
+              <div className="mt-12 p-10 bg-slate-950 text-white rounded-[3rem] relative overflow-hidden group shadow-2xl shadow-black/20">
+                <div className="absolute top-0 right-0 p-8 opacity-5 group-hover:opacity-10 transition-opacity">
+                   <ShieldCheck size={100} strokeWidth={1} />
                 </div>
-                <h4 className="text-lg font-black uppercase tracking-tight mb-2">Technical Assistance</h4>
-                <p className="text-[10px] font-bold text-blue-100 uppercase tracking-widest mb-10 opacity-80">Direct operational support available.</p>
-                <div className="space-y-4">
-                  <a href="mailto:info@printerkicks.shop" className="flex items-center gap-4 text-xs font-black hover:opacity-80 transition-opacity uppercase tracking-widest">
-                    <div className="h-10 w-10 rounded-xl bg-white/10 flex items-center justify-center border border-white/10"><Mail size={16} /></div>
-                    info@printerkicks.shop
+                <div className="relative z-10 space-y-6">
+                  <div className="flex items-center gap-3">
+                    <div className="h-1 w-1 rounded-full bg-blue-400 animate-pulse" />
+                    <h4 className="text-[10px] font-black text-blue-400 uppercase tracking-[0.4em]">Expert Support</h4>
+                  </div>
+                  <p className="text-xl font-black lowercase tracking-tight leading-tight">info@easymyprint.shop</p>
+                  <a href="mailto:info@easymyprint.shop" className="flex items-center gap-4 text-[11px] font-black hover:text-blue-400 transition-colors uppercase tracking-widest pt-4 border-t border-white/5">
+                    <div className="h-10 w-10 rounded-xl bg-white/5 flex items-center justify-center border border-white/10"><Mail size={18} /></div>
+                    Launch Inquiry
                   </a>
                 </div>
               </div>
@@ -202,40 +212,43 @@ export default function FAQ() {
           <div className="lg:col-span-8">
             <AnimatePresence mode="wait">
               <motion.div
-                key={activeCategory} initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }}
-                transition={{ duration: 0.5 }} className="space-y-4"
+                key={activeCategory} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.6 }} className="space-y-6"
               >
-                <div className="flex items-center gap-4 mb-10 border-b border-slate-100 pb-8">
-                   <Activity size={20} className="text-blue-600" />
-                   <h3 className="text-3xl font-black text-slate-900 uppercase tracking-tighter">
-                     {activeCategory}
-                   </h3>
+                <div className="flex items-end justify-between mb-12 border-b border-slate-100 pb-8 px-2">
+                   <div>
+                      <p className="text-[9px] font-black text-blue-600 uppercase tracking-[0.4em] mb-2">Active Folder</p>
+                      <h3 className="text-4xl font-black text-slate-900 uppercase tracking-tighter">
+                        {activeCategory}
+                      </h3>
+                   </div>
+                   <Activity size={24} className="text-slate-200" />
                 </div>
                 
-                <div className="space-y-3">
+                <div className="space-y-4">
                   {filteredData.find(c => c.category === activeCategory)?.questions.map((faq, idx) => (
                     <div 
                       key={idx}
                       className={cn(
-                        "bg-white border transition-all duration-500 overflow-hidden rounded-[1.5rem]",
-                        openIndex === idx ? "border-blue-600 shadow-2xl shadow-blue-600/5 bg-slate-50/30" : "border-slate-100 hover:border-slate-200"
+                        "bg-white border transition-all duration-700 overflow-hidden rounded-[2rem]",
+                        openIndex === idx ? "border-blue-600 shadow-[0_30px_60px_rgba(37,99,235,0.06)] bg-slate-50/20" : "border-slate-100 hover:border-blue-100 hover:shadow-[0_20px_40px_rgba(0,0,0,0.02)]"
                       )}
                     >
                       <button
                         onClick={() => setOpenIndex(openIndex === idx ? -1 : idx)}
-                        className="w-full px-8 py-8 flex items-center justify-between text-left"
+                        className="w-full px-10 py-10 flex items-center justify-between text-left group/btn"
                       >
                         <span className={cn(
-                          "text-base font-black uppercase tracking-tight leading-snug pr-8 transition-colors duration-500",
-                          openIndex === idx ? "text-blue-600" : "text-slate-900"
+                          "text-lg font-black uppercase tracking-tight leading-snug pr-8 transition-colors duration-500",
+                          openIndex === idx ? "text-blue-600" : "text-slate-900 group-hover/btn:text-blue-600"
                         )}>
                           {faq.q}
                         </span>
                         <div className={cn(
-                          "h-10 w-10 rounded-xl flex items-center justify-center shrink-0 transition-all duration-500",
-                          openIndex === idx ? "bg-blue-600 text-white rotate-180" : "bg-slate-50 text-slate-400 group-hover:bg-slate-900 group-hover:text-white"
+                          "h-12 w-12 rounded-2xl flex items-center justify-center shrink-0 transition-all duration-500 border",
+                          openIndex === idx ? "bg-slate-950 border-slate-950 text-white rotate-180 shadow-xl" : "bg-white border-slate-100 text-slate-300 group-hover/btn:border-blue-600 group-hover/btn:text-blue-600 group-hover/btn:scale-110"
                         )}>
-                          {openIndex === idx ? <Minus size={18} strokeWidth={2.5} /> : <Plus size={18} strokeWidth={2.5} />}
+                          {openIndex === idx ? <Minus size={20} strokeWidth={2.5} /> : <Plus size={20} strokeWidth={2.5} />}
                         </div>
                       </button>
                       
@@ -243,11 +256,11 @@ export default function FAQ() {
                         {openIndex === idx && (
                           <motion.div
                             initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }}
-                            transition={{ duration: 0.4, ease: "circOut" }}
+                            transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
                           >
-                            <div className="px-8 pb-8">
-                              <div className="bg-white border border-slate-100 rounded-2xl p-8 shadow-inner">
-                                <p className="text-slate-500 text-lg font-medium leading-relaxed">
+                            <div className="px-10 pb-10">
+                              <div className="bg-white border border-slate-100 rounded-[1.5rem] p-10 shadow-inner group-hover:bg-slate-50 transition-colors duration-500">
+                                <p className="text-slate-500 text-lg font-bold leading-relaxed">
                                   {faq.a}
                                 </p>
                               </div>
@@ -260,10 +273,12 @@ export default function FAQ() {
                 </div>
 
                 {filteredData.length === 0 && (
-                  <div className="py-24 text-center bg-slate-50 rounded-[3rem] border border-slate-100">
-                    <Search size={48} className="text-slate-200 mx-auto mb-6" />
-                    <h4 className="text-xl font-black text-slate-900 uppercase tracking-tight">Zero matches returned</h4>
-                    <p className="text-xs font-bold text-slate-400 uppercase tracking-[0.2em] mt-3">Try different refinement keywords</p>
+                  <div className="py-32 text-center bg-slate-50 rounded-[4rem] border border-slate-100">
+                    <div className="h-20 w-20 rounded-full bg-white border border-slate-100 flex items-center justify-center mx-auto mb-8 shadow-sm">
+                       <Search size={32} className="text-slate-200" />
+                    </div>
+                    <h4 className="text-2xl font-black text-slate-900 uppercase tracking-tight">Zero Results Returned</h4>
+                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mt-4">No documentation matches your criteria</p>
                   </div>
                 )}
               </motion.div>
@@ -272,6 +287,14 @@ export default function FAQ() {
 
         </div>
       </div>
+
+      <style>{`
+        .stroke-text-light {
+          -webkit-text-stroke: 2px #0f172a;
+          color: transparent;
+        }
+      `}</style>
     </div>
   );
 }
+

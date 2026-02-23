@@ -26,96 +26,103 @@ export default function ProductGrid({ products = [] }) {
   };
 
   return (
-    <section className="px-6 md:px-10 lg:px-12 py-16 lg:py-20 bg-white font-urbanist relative">
+    <section className="px-6 md:px-10 lg:px-16 py-24 lg:py-32 bg-white font-urbanist relative overflow-hidden">
       
-      {/* --- PROFESSIONAL CENTERED HEADER --- */}
-      <div className="relative z-10 flex flex-col items-center text-center mb-20">
-        <div className="max-w-4xl">
-          <div className="flex items-center justify-center gap-4 mb-6">
-            <span className="h-1.5 w-1.5 rounded-full bg-blue-600 animate-pulse" />
-            <span className="text-[10px] font-black tracking-[0.6em] text-blue-600 uppercase">
-              Latest Inventory
-            </span>
-            <span className="h-1.5 w-1.5 rounded-full bg-blue-600 animate-pulse" />
+      <div className="max-w-[1920px] mx-auto relative z-10">
+        {/* --- HERO MATCHED SECTION HEADER --- */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-20 gap-10">
+          <div className="max-w-3xl">
+            <div className="flex items-center gap-2 mb-4">
+              <span className="h-[1px] w-4 bg-blue-600 animate-pulse" />
+              <span className="text-[9px] font-black text-blue-600 uppercase tracking-[0.4em]">Latest Inventory</span>
+            </div>
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-black text-slate-900 tracking-tighter uppercase leading-[0.85]">
+              <span className="block mb-2">NEW</span>
+              <span className="text-transparent stroke-text-light">ARRIVALS.</span>
+            </h2>
           </div>
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-black text-slate-900 tracking-tighter uppercase leading-none">
-            NEW <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-slate-400 italic">ARRIVALS.</span>
-          </h2>
+          <Link to="/shop" className="group flex items-center gap-4 text-[11px] font-black text-slate-900 uppercase tracking-[0.2em] hover:text-blue-600 transition-colors mb-2">
+              Browse Complete Gallery
+              <div className="h-10 w-10 rounded-full border border-slate-100 flex items-center justify-center group-hover:bg-blue-600 group-hover:text-white group-hover:border-blue-600 transition-all duration-500">
+                <ArrowRight size={16} />
+              </div>
+           </Link>
+        </div>
+
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 lg:gap-8">
+          {products.map((p, i) => (
+              <motion.div 
+                key={p.id}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: (i % 5) * 0.05 }}
+                className="group relative bg-slate-50/50 rounded-[2.5rem] border border-slate-100 p-6 flex flex-col transition-all duration-700 hover:bg-white hover:border-blue-100 hover:shadow-[0_40px_80px_rgba(0,0,0,0.04)] h-full overflow-hidden"
+              >
+                {/* Wishlist Icon */}
+                <button 
+                  onClick={(e) => { e.preventDefault(); e.stopPropagation(); toggleWishlist(p); }}
+                  className={cn(
+                    "absolute top-5 right-5 z-20 h-9 w-9 rounded-full bg-white border border-slate-100 flex items-center justify-center transition-all duration-500 shadow-sm",
+                    isInWishlist(p.id) ? "text-red-500 shadow-md" : "text-slate-200 hover:text-red-500 hover:scale-110"
+                  )}
+                >
+                  <Heart size={15} fill={isInWishlist(p.id) ? "currentColor" : "none"} />
+                </button>
+
+                {/* Product Visual Area */}
+                <Link to={`/product/${p.slug}`} className="flex-1 flex flex-col pt-4">
+                  <div className="relative aspect-square mb-8 flex items-center justify-center p-4">
+                    <div className="absolute inset-0 bg-white rounded-full scale-0 group-hover:scale-90 transition-transform duration-700 opacity-50 shadow-inner" />
+                    <motion.img 
+                      whileHover={{ scale: 1.1, rotate: 2 }}
+                      src={getImagePath(p.images)} 
+                      alt={p.name}
+                      className="max-w-full max-h-full object-contain mix-blend-multiply relative z-10 transition-transform duration-700"
+                      onError={(e) => { e.target.src = "https://via.placeholder.com/400x400?text=Not+Found"; }}
+                    />
+                  </div>
+
+                  <div className="space-y-3 px-2">
+                    <span className="text-[8px] font-black text-blue-600 uppercase tracking-[0.3em] bg-blue-50/50 px-2 py-1 rounded-md">{p.brand_name || 'AUTHENTIC'}</span>
+                    <h3 className="text-[14px] font-black text-slate-900 uppercase tracking-tighter line-clamp-2 leading-tight group-hover:text-blue-600 transition-colors duration-500">
+                      {p.name}
+                    </h3>
+                    <div className="flex items-center justify-between pt-2">
+                      <span className="text-xl font-black text-slate-950 tracking-tighter">${p.price}</span>
+                    </div>
+                  </div>
+                </Link>
+
+                {/* Action Hub - Dynamic Pill */}
+                <div className="mt-8 pt-6 border-t border-slate-100/50">
+                  <motion.button 
+                    whileTap={{ scale: 0.95 }}
+                    onClick={(e) => { e.preventDefault(); e.stopPropagation(); handleAddToCart(p); }}
+                    disabled={addedItems[p.id]}
+                    className={cn(
+                      "w-full h-12 rounded-xl flex items-center justify-center gap-3 font-black text-[10px] uppercase tracking-widest transition-all duration-500 shadow-md",
+                      addedItems[p.id] 
+                        ? "bg-emerald-500 text-white shadow-emerald-500/20" 
+                        : "bg-slate-950 text-white hover:bg-blue-600 shadow-black/10 hover:shadow-blue-600/20"
+                    )}
+                  >
+                    {addedItems[p.id] ? <Check size={14} /> : <Plus size={14} />}
+                    {addedItems[p.id] ? "SUCCESS" : "ADD TO CART"}
+                  </motion.button>
+                </div>
+              </motion.div>
+            ))}
         </div>
       </div>
 
-      <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-px bg-slate-100 border border-slate-100">
-        {products.map((p, i) => (
-            <motion.div 
-              key={p.id}
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: (i % 6) * 0.05 }}
-              className="group bg-white p-6 transition-all duration-500 hover:z-10 hover:shadow-[0_20px_50px_rgba(0,0,0,0.1)] flex flex-col relative h-full border-y border-slate-50"
-            >
-              {/* Top Bar Indicators */}
-              <div className="flex justify-between items-start mb-6">
-                 <span className="text-[8px] font-black text-slate-300 uppercase tracking-widest group-hover:text-blue-600 transition-colors">
-                   {p.brand_name || 'AUTHENTIC'}
-                 </span>
-                 <button 
-                    onClick={(e) => { e.preventDefault(); e.stopPropagation(); toggleWishlist(p); }}
-                    className={cn(
-                      "transition-all duration-300 transform",
-                      isInWishlist(p.id) ? "text-red-500 scale-110" : "text-slate-200 hover:text-red-500 opacity-0 group-hover:opacity-100"
-                    )}
-                  >
-                    <Heart size={16} fill={isInWishlist(p.id) ? "currentColor" : "none"} strokeWidth={2.5} />
-                  </button>
-              </div>
-
-              {/* Product Visual */}
-              <Link to={`/product/${p.slug}`} className="flex-1 flex flex-col">
-                <div className="relative aspect-square mb-8 flex items-center justify-center p-4">
-                  <img 
-                    src={getImagePath(p.images)} 
-                    alt={p.name}
-                    className="max-w-full max-h-full object-contain transition-transform duration-700 group-hover:scale-110"
-                    onError={(e) => { e.target.src = "https://via.placeholder.com/400x400?text=Not+Found"; }}
-                  />
-                </div>
-
-                <div className="space-y-3">
-                  <h3 className="text-xs font-black text-slate-900 uppercase tracking-tight line-clamp-3 leading-tight min-h-[3rem] group-hover:text-blue-600 transition-colors">
-                    {p.name}
-                  </h3>
-                  <div className="flex items-end justify-between">
-                    <span className="text-base font-black text-slate-900">${p.price}</span>
-                  </div>
-                </div>
-              </Link>
-
-              {/* Quick Action Overlay */}
-              <div className="mt-6 pt-6 border-t border-slate-50 opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-500">
-                <button 
-                  onClick={(e) => { e.preventDefault(); e.stopPropagation(); handleAddToCart(p); }}
-                  disabled={addedItems[p.id]}
-                  className={cn(
-                    "w-full h-10 flex items-center justify-center gap-2 font-black text-[9px] uppercase tracking-widest transition-all duration-300",
-                    addedItems[p.id] 
-                      ? "bg-emerald-500 text-white" 
-                      : "bg-slate-900 text-white hover:bg-blue-600 shadow-lg shadow-slate-900/10"
-                  )}
-                >
-                  {addedItems[p.id] ? <><Check size={14} /> ADDED</> : <><Plus size={14} /> ADD TO CART</>}
-                </button>
-              </div>
-            </motion.div>
-          ))}
-      </div>
-
-      {/* Explore All Bottom Link */}
-      <div className="mt-16 flex justify-center">
-         <Link to="/shop" className="h-14 px-12 border border-slate-200 hover:border-slate-900 hover:bg-slate-900 hover:text-white rounded-full flex items-center gap-4 transition-all duration-500 text-[11px] font-black uppercase tracking-widest shadow-sm">
-            INITIALIZE FULL CATALOG <ArrowRight size={16} />
-         </Link>
-      </div>
+      {/* Global Styles for Stroke Text */}
+      <style>{`
+        .stroke-text-light {
+          -webkit-text-stroke: 2px #0f172a;
+          color: transparent;
+        }
+      `}</style>
     </section>
   );
 }

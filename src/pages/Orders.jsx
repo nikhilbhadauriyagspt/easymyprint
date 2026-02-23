@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Package, ChevronRight, Search, Loader2, Calendar, CreditCard, Truck, X, CheckCircle2, Clock, Box, MapPin } from 'lucide-react';
+import { Package, ChevronRight, Search, Loader2, Calendar, CreditCard, Truck, X, CheckCircle2, Clock, Box, MapPin, ArrowRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import API_BASE_URL from '../config';
+import { cn } from '../lib/utils';
+import SEO from '@/components/SEO';
 
 export default function Orders() {
   const [orders, setOrders] = useState([]);
@@ -12,11 +14,11 @@ export default function Orders() {
   const user = JSON.parse(localStorage.getItem('user') || 'null');
 
   const statusMap = [
-    { key: 'pending', label: 'Order Placed', icon: Clock, desc: 'We have received your order' },
-    { key: 'processing', label: 'Processing', icon: Package, desc: 'Your items are being prepared' },
-    { key: 'shipped', label: 'Shipped', icon: Truck, desc: 'Package has left our facility' },
-    { key: 'out_for_delivery', label: 'Out for Delivery', icon: MapPin, desc: 'Courier is on the way' },
-    { key: 'delivered', label: 'Delivered', icon: CheckCircle2, desc: 'Successfully delivered' }
+    { key: 'pending', label: 'Order Received', icon: Clock, desc: 'Your acquisition has been registered' },
+    { key: 'processing', label: 'In Preparation', icon: Package, desc: 'Units are being meticulously checked' },
+    { key: 'shipped', label: 'In Transit', icon: Truck, desc: 'Consignment has left our facility' },
+    { key: 'out_for_delivery', label: 'Arrival Imminent', icon: MapPin, desc: 'Courier is approaching destination' },
+    { key: 'delivered', label: 'Handover Complete', icon: CheckCircle2, desc: 'Successfully reached destination' }
   ];
 
   const getStatusIndex = (status) => statusMap.findIndex(s => s.key === status);
@@ -52,30 +54,33 @@ export default function Orders() {
 
   if (!user && orders.length === 0 && !loading) {
     return (
-      <div className="min-h-screen bg-white pt-40 pb-20 font-urbanist px-6">
-        <div className="max-w-2xl mx-auto text-center">
-          <div className="h-20 w-20 rounded-full bg-blue-50 flex items-center justify-center mx-auto mb-8">
-            <Package size={32} className="text-blue-600" />
+      <div className="min-h-screen bg-white pt-40 pb-20 font-urbanist px-6 relative overflow-hidden">
+        {/* Background Decor */}
+        <div className="absolute top-0 right-0 w-[40%] h-[40%] bg-blue-50/50 blur-[120px] rounded-full pointer-events-none" />
+        
+        <div className="max-w-2xl mx-auto text-center relative z-10">
+          <div className="h-24 w-24 rounded-[2.5rem] bg-slate-50 border border-slate-100 flex items-center justify-center mx-auto mb-10 shadow-sm">
+            <Package size={40} className="text-slate-200" />
           </div>
-          <h1 className="text-4xl font-black text-slate-900 uppercase tracking-tighter mb-4">Track Your Order.</h1>
-          <p className="text-slate-500 font-bold uppercase tracking-widest text-[10px] mb-12">Login to see your full history or enter your guest email below.</p>
+          <h1 className="text-4xl md:text-5xl font-black text-slate-900 uppercase tracking-tighter mb-4">Track Order.</h1>
+          <p className="text-slate-400 font-bold uppercase tracking-widest text-[10px] mb-12">Login to see your full history or enter your guest email below.</p>
           
-          <form onSubmit={handleGuestSearch} className="flex flex-col sm:flex-row gap-4 mb-12">
+          <form onSubmit={handleGuestSearch} className="flex flex-col sm:flex-row gap-4 mb-16 group">
             <input 
               type="email" 
               required
-              placeholder="ENTER GUEST EMAIL" 
+              placeholder="ENTER GUEST EMAIL ADDRESS" 
               value={guestEmail}
               onChange={(e) => setGuestEmail(e.target.value)}
-              className="flex-1 h-16 px-6 bg-gray-50 border border-gray-100 rounded-2xl focus:bg-white focus:border-blue-600 outline-none text-xs font-bold uppercase transition-all"
+              className="flex-1 h-16 px-8 bg-slate-50 border border-slate-100 rounded-2xl focus:bg-white focus:border-blue-600 outline-none text-xs font-bold uppercase transition-all shadow-inner"
             />
-            <button className="h-16 px-10 bg-black text-white rounded-2xl font-black text-[10px] uppercase tracking-widest hover:bg-blue-600 transition-all">
-              Find Order
+            <button className="h-16 px-12 bg-slate-950 text-white rounded-2xl font-black text-[10px] uppercase tracking-widest hover:bg-blue-600 transition-all shadow-xl">
+              Locate Order
             </button>
           </form>
 
-          <div className="pt-8 border-t border-gray-100">
-            <Link to="/login" className="text-blue-600 font-black text-[10px] uppercase tracking-[0.2em] hover:underline">Or Login to your account</Link>
+          <div className="pt-10 border-t border-slate-50">
+            <Link to="/login" className="text-blue-600 font-black text-[10px] uppercase tracking-[0.2em] hover:underline">Authentication Terminal</Link>
           </div>
         </div>
       </div>
@@ -83,103 +88,146 @@ export default function Orders() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50/50 pt-32 pb-20 font-urbanist">
-      <div className="max-w-[1200px] mx-auto px-6 md:px-10">
+    <div className="min-h-screen bg-white pt-32 pb-20 font-urbanist relative overflow-hidden">
+      <SEO title="Order History | EasyMyPrint" />
+      
+      {/* Background Decor */}
+      <div className="absolute top-0 right-0 w-[40%] h-[40%] bg-blue-50/50 blur-[120px] rounded-full pointer-events-none" />
+
+      <div className="max-w-[1400px] mx-auto px-6 md:px-10 lg:px-16 relative z-10">
         
-        <div className="flex items-end justify-between mb-12 border-b border-gray-200 pb-8">
+        {/* --- HERO MATCHED HEADER --- */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-8 border-b border-slate-100 pb-10">
           <div>
-            <span className="text-[10px] font-black tracking-[0.4em] uppercase text-blue-600 mb-2 block ml-1">Order History</span>
-            <h1 className="text-5xl font-black text-slate-900 tracking-tighter uppercase leading-none">
-              Your <span className="text-slate-400 italic">Purchases.</span>
+            <div className="flex items-center gap-2 mb-4">
+              <span className="h-[1px] w-6 bg-blue-600 animate-pulse" />
+              <span className="text-[10px] font-black tracking-[0.4em] uppercase text-blue-600">Acquisition History</span>
+            </div>
+            <h1 className="text-5xl md:text-6xl lg:text-7xl font-black text-slate-900 tracking-tighter uppercase leading-[0.85]">
+              MY <span className="text-transparent stroke-text-light">ORDERS.</span>
             </h1>
           </div>
-          <p className="text-xs font-black uppercase tracking-widest text-slate-400 pb-1">{orders.length} Total Orders</p>
+          <div className="flex items-center gap-3 bg-slate-50 px-6 py-3 rounded-2xl border border-slate-100">
+             <span className="h-2 w-2 rounded-full bg-blue-600 animate-pulse" />
+             <p className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-900">{orders.length} Units Reserved</p>
+          </div>
         </div>
 
         {loading ? (
-          <div className="flex flex-col items-center justify-center py-32">
-            <Loader2 className="animate-spin h-12 w-12 text-blue-600 mb-4" />
-            <p className="text-[10px] font-black uppercase tracking-widest text-slate-400">Retrieving History</p>
+          <div className="flex flex-col items-center justify-center py-48">
+            <Loader2 className="animate-spin h-12 w-12 text-blue-600 mb-6" />
+            <p className="text-[10px] font-black uppercase tracking-[0.5em] text-slate-300">Synchronizing Archive...</p>
           </div>
         ) : orders.length === 0 ? (
-          <div className="text-center py-32 bg-white rounded-[3rem] border border-gray-100">
-            <Package size={48} className="text-gray-200 mx-auto mb-6" />
-            <h3 className="text-xl font-black text-slate-900 uppercase">No orders found</h3>
-            <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mt-2 mb-8">You haven't placed any orders yet.</p>
-            <Link to="/shop" className="px-10 py-4 bg-black text-white rounded-xl text-[10px] font-black uppercase tracking-widest">Start Shopping</Link>
+          <div className="text-center py-32 bg-slate-50 rounded-[4rem] border border-slate-100">
+            <Package size={48} className="text-slate-200 mx-auto mb-8" />
+            <h3 className="text-2xl font-black text-slate-900 uppercase tracking-tighter">Zero History Found</h3>
+            <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-3 mb-10">No acquisitions detected in this terminal.</p>
+            <Link to="/shop" className="h-16 px-12 bg-slate-950 text-white rounded-full inline-flex items-center gap-4 font-black text-[10px] uppercase tracking-widest shadow-xl hover:bg-blue-600 transition-all group">
+              Browse Inventory <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+            </Link>
           </div>
         ) : (
-          <div className="space-y-6">
+          <div className="space-y-8">
             {orders.map((order) => (
               <motion.div 
                 initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
                 key={order.id} 
-                className="bg-white rounded-[2.5rem] border border-gray-100 overflow-hidden group hover:shadow-xl hover:shadow-gray-200/20 transition-all"
+                className="bg-white rounded-[3rem] border border-slate-100 overflow-hidden group hover:border-blue-100 transition-all duration-700 hover:shadow-[0_40px_100px_rgba(0,0,0,0.04)]"
               >
-                <div className="p-8 border-b border-gray-50 flex flex-wrap items-center justify-between gap-6">
-                  <div className="flex items-center gap-6">
-                    <div className="h-14 w-14 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center">
-                      <Package size={24} />
+                <div className="p-8 lg:p-10 border-b border-slate-50 flex flex-wrap items-center justify-between gap-8 bg-slate-50/30">
+                  <div className="flex items-center gap-8">
+                    <div className="flex items-center gap-5">
+                      <div className="h-14 w-14 rounded-2xl bg-white border border-slate-100 shadow-sm text-slate-900 flex items-center justify-center">
+                        <Package size={24} strokeWidth={1.5} />
+                      </div>
+                      <div>
+                        <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1">Acquisition ID</p>
+                        <h3 className="text-sm font-black text-slate-900 uppercase tracking-tight">#PFX-{order.order_code || order.id}</h3>
+                      </div>
                     </div>
-                    <div>
-                      <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1">Order ID</p>
-                      <h3 className="text-sm font-black text-slate-900 uppercase">#PFX-{order.id}</h3>
+                    
+                    <div className="hidden lg:block h-10 w-px bg-slate-200" />
+                    
+                    <div className="hidden sm:block">
+                      <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1 flex items-center gap-2">
+                        <Calendar size={10} className="text-blue-600" /> Dispatch Date
+                      </p>
+                      <p className="text-[11px] font-black text-slate-900 uppercase">{new Date(order.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</p>
                     </div>
                   </div>
 
-                  <div className="flex gap-12">
-                    <div>
-                      <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1 flex items-center gap-2">
-                        <Calendar size={10} /> Date
-                      </p>
-                      <p className="text-[11px] font-bold text-slate-900 uppercase">{new Date(order.created_at).toLocaleDateString()}</p>
+                  <div className="flex items-center gap-12">
+                    <div className="hidden md:block text-right">
+                      <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1">Settlement</p>
+                      <p className="text-[11px] font-black text-slate-900 uppercase tracking-widest">{order.payment_method === 'cod' ? 'Upon Arrival' : 'PayPal Secure'}</p>
                     </div>
-                    <div>
-                      <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1 flex items-center gap-2">
-                        <CreditCard size={10} /> Payment
-                      </p>
-                      <p className="text-[11px] font-bold text-slate-900 uppercase">{order.payment_method}</p>
+                    
+                    <div className={cn(
+                      "px-5 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest flex items-center gap-3 shadow-sm border",
+                      order.status === 'completed' || order.status === 'delivered' ? "bg-emerald-50 text-emerald-600 border-emerald-100" :
+                      order.status === 'pending' ? "bg-amber-50 text-amber-600 border-amber-100" :
+                      "bg-blue-50 text-blue-600 border-blue-100"
+                    )}>
+                      <div className={cn("h-1.5 w-1.5 rounded-full animate-pulse", 
+                        order.status === 'completed' || order.status === 'delivered' ? "bg-emerald-500" :
+                        order.status === 'pending' ? "bg-amber-500" : "bg-blue-500"
+                      )} />
+                      {order.status}
                     </div>
-                    <div>
-                      <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1">Status</p>
-                      <span className="px-3 py-1 rounded-full bg-emerald-50 text-emerald-600 text-[9px] font-black uppercase tracking-widest border border-emerald-100">
-                        {order.status}
-                      </span>
-                    </div>
-                  </div>
 
-                  <div className="text-right">
-                    <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1">Total Amount</p>
-                    <p className="text-xl font-black text-blue-600">${order.total_amount}</p>
+                    <div className="text-right">
+                      <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1">Valuation</p>
+                      <p className="text-2xl font-black text-blue-600 tracking-tighter">${parseFloat(order.total_amount).toLocaleString()}</p>
+                    </div>
                   </div>
                 </div>
 
-                <div className="p-8 bg-gray-50/30">
-                  <div className="space-y-4">
+                <div className="p-10 lg:p-12 flex flex-col lg:flex-row gap-16">
+                  <div className="flex-1 space-y-8">
                     {order.items && order.items.map((item, idx) => (
-                      <div key={idx} className="flex items-center justify-between">
-                        <div className="flex items-center gap-4">
-                          <div className="h-10 w-10 rounded-lg bg-white border border-gray-100 flex items-center justify-center text-[10px] font-black">
-                            {item.quantity}x
-                          </div>
-                          <p className="text-[11px] font-bold text-slate-700 uppercase tracking-tight line-clamp-1 max-w-[300px]">{item.product_name}</p>
+                      <div key={idx} className="flex items-center gap-8 group/item">
+                        <div className="h-20 w-20 rounded-[1.5rem] bg-slate-50 border border-slate-100 flex items-center justify-center p-4 shrink-0 transition-all duration-500 group-hover/item:bg-white group-hover/item:border-blue-100 group-hover/item:scale-105 group-hover/item:shadow-lg group-hover/item:shadow-blue-500/5">
+                          <img 
+                            src={item.images ? (typeof item.images === 'string' ? JSON.parse(item.images)[0] : item.images[0]) : ''} 
+                            className="max-w-full max-h-full object-contain mix-blend-multiply" alt="" 
+                          />
                         </div>
-                        <p className="text-[11px] font-black text-slate-900">${item.price}</p>
+                        <div className="flex-1 min-w-0">
+                          <span className="text-[9px] font-black text-blue-600 uppercase tracking-widest block mb-1">Authorized Unit</span>
+                          <h4 className="text-[15px] font-black text-slate-900 uppercase truncate tracking-tight group-hover/item:text-blue-600 transition-colors">{item.product_name}</h4>
+                          <div className="flex items-center gap-4 mt-2">
+                             <span className="text-[11px] font-bold text-slate-400 uppercase tracking-widest">Qty: {item.quantity}</span>
+                             <div className="h-1 w-1 rounded-full bg-slate-200" />
+                             <span className="text-[11px] font-black text-slate-900 tracking-tight">${parseFloat(item.price).toLocaleString()}</span>
+                          </div>
+                        </div>
                       </div>
                     ))}
                   </div>
                   
-                  <div className="mt-8 pt-6 border-t border-gray-100 flex items-center justify-between">
-                    <div className="flex items-center gap-2 text-[9px] font-black text-slate-400 uppercase tracking-widest">
-                      <Truck size={12} /> Shipping to: <span className="text-slate-900 ml-1">{order.address}, {order.city}</span>
+                  <div className="lg:w-[380px] space-y-8 pt-8 lg:pt-0 lg:border-l lg:border-slate-100 lg:pl-16">
+                    <div className="flex flex-col gap-6">
+                       <div className="space-y-3">
+                          <div className="flex items-center gap-3">
+                             <MapPin size={16} className="text-blue-600" />
+                             <h4 className="text-[10px] font-black text-slate-900 uppercase tracking-[0.3em]">Destination Hub</h4>
+                          </div>
+                          <p className="text-[13px] font-bold text-slate-500 leading-relaxed uppercase tracking-tight pl-7">
+                            {order.address}, {order.city}<br />
+                            {order.zipCode || 'United States'}
+                          </p>
+                       </div>
+                       
+                       <button 
+                        onClick={() => setSelectedOrder(order)}
+                        className="w-full h-14 rounded-2xl bg-slate-950 text-white flex items-center justify-center gap-4 text-[10px] font-black uppercase tracking-[0.3em] hover:bg-blue-600 transition-all shadow-xl shadow-black/10 group"
+                      >
+                        Track Real-Time Status <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+                      </button>
                     </div>
-                    <button 
-                      onClick={() => setSelectedOrder(order)}
-                      className="flex items-center gap-2 text-[10px] font-black text-blue-600 uppercase tracking-widest group-hover:gap-4 transition-all"
-                    >
-                      Track Shipment <ChevronRight size={14} />
-                    </button>
                   </div>
                 </div>
               </motion.div>
@@ -194,27 +242,26 @@ export default function Orders() {
               <motion.div 
                 initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
                 onClick={() => setSelectedOrder(null)}
-                className="fixed inset-0 bg-black/40 backdrop-blur-sm z-[1000]"
+                className="fixed inset-0 bg-slate-950/20 backdrop-blur-md z-[1000]"
               />
               <motion.div 
-                initial={{ opacity: 0, scale: 0.9, y: 20 }}
+                initial={{ opacity: 0, scale: 0.95, y: 20 }}
                 animate={{ opacity: 1, scale: 1, y: 0 }}
-                exit={{ opacity: 0, scale: 0.9, y: 20 }}
-                className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-xl bg-white rounded-[3rem] z-[1001] shadow-2xl p-10 font-urbanist"
+                exit={{ opacity: 0, scale: 0.95, y: 20 }}
+                className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-xl bg-white rounded-[3.5rem] z-[1001] shadow-[0_50px_100px_rgba(0,0,0,0.15)] p-12 font-urbanist border border-slate-100"
               >
-                <div className="flex items-center justify-between mb-10">
+                <div className="flex items-center justify-between mb-12">
                   <div>
-                    <h2 className="text-2xl font-black text-slate-900 uppercase tracking-tighter">Track Order.</h2>
-                    <p className="text-[10px] font-black text-blue-600 uppercase tracking-widest mt-1">#PFX-{selectedOrder.id}</p>
+                    <h2 className="text-3xl font-black text-slate-900 uppercase tracking-tighter leading-none">Tracking Hub.</h2>
+                    <p className="text-[10px] font-black text-blue-600 uppercase tracking-[0.4em] mt-3">Deployment #PFX-{selectedOrder.id}</p>
                   </div>
-                  <button onClick={() => setSelectedOrder(null)} className="h-12 w-12 rounded-full bg-gray-50 flex items-center justify-center hover:bg-black hover:text-white transition-all">
-                    <X size={20} />
+                  <button onClick={() => setSelectedOrder(null)} className="h-14 w-14 rounded-2xl bg-slate-50 border border-slate-100 flex items-center justify-center hover:bg-slate-950 hover:text-white transition-all shadow-sm">
+                    <X size={24} />
                   </button>
                 </div>
 
-                <div className="relative space-y-10">
-                  {/* Vertical Line */}
-                  <div className="absolute left-6 top-2 bottom-2 w-0.5 bg-gray-100" />
+                <div className="relative space-y-12">
+                  <div className="absolute left-[23px] top-4 bottom-4 w-px bg-slate-100" />
 
                   {statusMap.map((step, idx) => {
                     const isCompleted = getStatusIndex(selectedOrder.status) >= idx;
@@ -222,50 +269,43 @@ export default function Orders() {
                     const Icon = step.icon;
 
                     return (
-                      <div key={step.key} className="relative flex gap-8 group">
-                        <div className={`h-12 w-12 rounded-2xl flex items-center justify-center z-10 transition-all duration-500 ${
-                          isCompleted ? 'bg-blue-600 text-white shadow-lg shadow-blue-600/20' : 'bg-white border-2 border-gray-100 text-gray-300'
+                      <div key={step.key} className="relative flex gap-10 group">
+                        <div className={`h-12 w-12 rounded-2xl flex items-center justify-center z-10 transition-all duration-700 border-2 ${
+                          isCompleted ? 'bg-slate-950 border-slate-950 text-white shadow-xl shadow-black/10' : 'bg-white border-slate-100 text-slate-200'
                         }`}>
                           <Icon size={20} className={isActive ? 'animate-pulse' : ''} />
                         </div>
                         
                         <div className="flex-1 py-1">
-                          <h4 className={`text-xs font-black uppercase tracking-widest ${isCompleted ? 'text-slate-900' : 'text-slate-300'}`}>
+                          <h4 className={`text-sm font-black uppercase tracking-widest transition-colors duration-500 ${isCompleted ? 'text-slate-950' : 'text-slate-300'}`}>
                             {step.label}
                           </h4>
-                          <p className={`text-[10px] font-bold mt-1 ${isCompleted ? 'text-slate-500' : 'text-slate-300'}`}>
+                          <p className={`text-[11px] font-bold mt-1 transition-colors duration-500 ${isCompleted ? 'text-slate-500' : 'text-slate-300'}`}>
                             {step.desc}
                           </p>
                           {isActive && (
                             <motion.div 
-                              layoutId="active-indicator"
-                              className="inline-flex items-center gap-2 mt-3 px-3 py-1 bg-emerald-50 text-emerald-600 rounded-full text-[8px] font-black uppercase tracking-widest border border-emerald-100"
+                              layoutId="active-tag"
+                              className="inline-flex items-center gap-2 mt-4 px-4 py-1.5 bg-blue-50 text-blue-600 rounded-full text-[9px] font-black uppercase tracking-[0.2em] border border-blue-100"
                             >
-                              Current Status
+                              <div className="h-1 w-1 rounded-full bg-blue-600 animate-ping" />
+                              Current Real-Time Status
                             </motion.div>
                           )}
                         </div>
-
-                        {isCompleted && !isActive && (
-                          <div className="absolute -left-1 top-1/2 -translate-y-1/2 ml-14 opacity-0 group-hover:opacity-100 transition-opacity">
-                             <CheckCircle2 size={12} className="text-emerald-500" />
-                          </div>
-                        )}
                       </div>
                     );
                   })}
                 </div>
 
-                <div className="mt-12 pt-8 border-t border-gray-100">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1">Carrier</p>
-                      <p className="text-xs font-black text-slate-900 uppercase">PrinterKicks Logistics</p>
-                    </div>
-                    <div className="text-right">
-                      <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1">Expected Delivery</p>
-                      <p className="text-xs font-black text-slate-900 uppercase">2-3 Business Days</p>
-                    </div>
+                <div className="mt-16 pt-10 border-t border-slate-100 flex items-center justify-between">
+                  <div>
+                    <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1">Logistics Provider</p>
+                    <p className="text-xs font-black text-slate-900 uppercase">EasyMyPrint Network</p>
+                  </div>
+                  <div className="text-right">
+                    <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1">Estimate</p>
+                    <p className="text-xs font-black text-slate-900 uppercase">Express Dispatch Active</p>
                   </div>
                 </div>
               </motion.div>
@@ -273,6 +313,14 @@ export default function Orders() {
           )}
         </AnimatePresence>
       </div>
+      
+      {/* Global Styles for Stroke Text */}
+      <style>{`
+        .stroke-text-light {
+          -webkit-text-stroke: 2px #0f172a;
+          color: transparent;
+        }
+      `}</style>
     </div>
   );
 }

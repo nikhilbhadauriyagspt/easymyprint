@@ -1,5 +1,5 @@
 {
-  "name": "printerkicks.shop",
+  "name": "easymyprint.shop",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@google/generative-ai": "^0.24.1",
     "@paypal/react-paypal-js": "^8.9.2",
     "@tailwindcss/vite": "^4.1.18",
     "class-variance-authority": "^0.7.1",

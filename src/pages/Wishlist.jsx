@@ -42,28 +42,28 @@ export default function Wishlist() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-50/30 pt-32 pb-20 font-urbanist relative">
-      <div className="max-w-[1600px] mx-auto px-6 md:px-10 lg:px-12 relative z-10">
+    <div className="min-h-screen bg-white pt-32 pb-20 font-urbanist relative">
+      <div className="max-w-[1600px] mx-auto px-6 md:px-10 lg:px-16 relative z-10">
         
-        {/* --- REFINED HEADER --- */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-20 gap-8">
-          <div className="max-w-2xl">
-            <div className="flex items-center gap-3 mb-6">
-               <div className="h-1.5 w-1.5 rounded-full bg-red-500 animate-pulse" />
-               <span className="text-[10px] font-black text-red-500 uppercase tracking-[0.5em]">Curated Portfolio</span>
+        {/* --- HERO MATCHED HEADER --- */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-8 border-b border-slate-100 pb-10">
+          <div>
+            <div className="flex items-center gap-2 mb-4">
+              <span className="h-[1px] w-6 bg-red-500 animate-pulse" />
+              <span className="text-[10px] font-black tracking-[0.4em] uppercase text-red-500">Curated Portfolio</span>
             </div>
-            <h1 className="text-5xl md:text-7xl font-black text-slate-900 tracking-tighter uppercase leading-none">
-              THE <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-slate-400 italic">WISHLIST.</span>
+            <h1 className="text-5xl md:text-6xl lg:text-7xl font-black text-slate-900 tracking-tighter uppercase leading-[0.85]">
+              THE <span className="text-transparent stroke-text-light">WISHLIST.</span>
             </h1>
           </div>
-          <div className="flex flex-col items-end gap-2">
-             <span className="text-2xl font-black text-slate-900">{wishlistCount}</span>
-             <span className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-400">Marked Units</span>
+          <div className="flex items-center gap-3 bg-slate-50 px-6 py-3 rounded-2xl border border-slate-100">
+             <span className="h-2 w-2 rounded-full bg-red-500 animate-pulse" />
+             <p className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-900">{wishlistCount} Units Marked</p>
           </div>
         </div>
 
         {/* --- FLOATING GALLERY GRID --- */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
           <AnimatePresence mode="popLayout">
             {wishlist.map((p, i) => (
               <motion.div 
@@ -72,57 +72,50 @@ export default function Wishlist() {
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.95 }}
-                transition={{ duration: 0.6, delay: i * 0.05, ease: [0.16, 1, 0.3, 1] }}
-                className="group relative flex flex-col bg-white rounded-[3rem] p-6 shadow-[0_10px_40px_-15px_rgba(0,0,0,0.05)] border border-slate-100 hover:shadow-[0_30px_80px_-20px_rgba(0,0,0,0.12)] transition-all duration-700 h-full overflow-hidden"
+                transition={{ duration: 0.6, delay: i * 0.05 }}
+                className="group relative bg-slate-50/50 rounded-[2.5rem] border border-slate-100 p-6 flex flex-col transition-all duration-700 hover:bg-white hover:border-red-100 hover:shadow-[0_40px_80px_rgba(239,68,68,0.04)] h-full overflow-hidden"
               >
-                {/* Internal HUD Detail */}
-                <div className="absolute top-0 right-0 w-24 h-24 bg-red-500/[0.02] rounded-full blur-2xl -m-10" />
-                
-                {/* Visual Area */}
-                <div className="relative aspect-square bg-slate-50/50 rounded-[2.2rem] flex items-center justify-center p-10 overflow-hidden mb-8 transition-all duration-700 group-hover:bg-white border border-transparent group-hover:border-slate-100">
-                  <button 
-                    onClick={(e) => { e.preventDefault(); toggleWishlist(p); }}
-                    className="absolute top-4 right-4 h-11 w-11 bg-white text-slate-300 hover:text-red-500 rounded-2xl shadow-sm border border-slate-100 flex items-center justify-center z-20 transition-all hover:scale-110 active:scale-95"
-                  >
-                    <Trash2 size={18} strokeWidth={2.5} />
-                  </button>
+                {/* Wishlist Removal */}
+                <button 
+                  onClick={(e) => { e.preventDefault(); toggleWishlist(p); }}
+                  className="absolute top-5 right-5 z-20 h-10 w-10 rounded-full bg-white border border-slate-100 text-slate-300 hover:text-red-500 flex items-center justify-center transition-all duration-500 shadow-sm"
+                >
+                  <Trash2 size={18} strokeWidth={2.5} />
+                </button>
 
-                  <Link to={`/product/${p.slug}`} className="w-full h-full flex items-center justify-center relative z-10">
-                    <img 
+                {/* Product Visual Area */}
+                <Link to={`/product/${p.slug}`} className="flex-1 flex flex-col pt-4">
+                  <div className="relative aspect-square mb-8 flex items-center justify-center p-4">
+                    <div className="absolute inset-0 bg-white rounded-full scale-0 group-hover:scale-100 transition-transform duration-700 opacity-50 shadow-inner" />
+                    <motion.img 
+                      whileHover={{ scale: 1.1, rotate: 2 }}
                       src={getImagePath(p.images)} 
                       alt={p.name}
-                      className="max-w-full max-h-full object-contain mix-blend-multiply transition-transform duration-700 group-hover:scale-110"
+                      className="max-w-full max-h-full object-contain mix-blend-multiply relative z-10 transition-transform duration-700"
                     />
-                  </Link>
-                </div>
-
-                {/* Info Area */}
-                <div className="px-4 flex-1 flex flex-col">
-                  <div className="flex items-center gap-3 mb-4">
-                     <span className="text-[9px] font-black text-red-500 bg-red-50 px-2.5 py-1 rounded-lg uppercase tracking-widest">{p.brand_name || 'ELITE'}</span>
-                     <div className="h-px flex-1 bg-slate-100" />
                   </div>
-                  
-                  <Link to={`/product/${p.slug}`}>
-                    <h3 className="text-lg font-black text-slate-900 group-hover:text-red-500 transition-colors uppercase tracking-tight leading-[1.1] mb-4 line-clamp-2 min-h-[2.4rem]">
+
+                  <div className="space-y-3 px-2">
+                    <span className="text-[10px] font-black text-red-500 uppercase tracking-widest bg-red-50/50 px-3 py-1 rounded-full border border-red-100/50">{p.brand_name || 'AUTHORIZED'}</span>
+                    <h3 className="text-[16px] font-black text-slate-900 uppercase tracking-tighter line-clamp-2 leading-tight group-hover:text-red-500 transition-colors duration-500">
                       {p.name}
                     </h3>
-                  </Link>
-
-                  <div className="mt-auto pt-6 flex items-center justify-between gap-4 border-t border-slate-50">
-                    <div className="flex flex-col">
-                       <span className="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-0.5">Value</span>
-                       <span className="text-xl font-black text-slate-900">${p.price.toLocaleString()}</span>
+                    <div className="flex items-center justify-between pt-2">
+                      <span className="text-xl font-black text-slate-950 tracking-tighter">${p.price.toLocaleString()}</span>
                     </div>
-                    
-                    <button 
-                      onClick={() => addToCart(p)}
-                      className="h-12 px-6 bg-slate-900 text-white rounded-2xl flex items-center justify-center gap-3 text-[10px] font-black uppercase tracking-widest hover:bg-red-500 transition-all shadow-xl active:scale-95 group/btn"
-                    >
-                      <Plus size={16} strokeWidth={3} className="group-hover/btn:rotate-90 transition-transform" />
-                      ADD TO BAG
-                    </button>
                   </div>
+                </Link>
+
+                {/* Action Hub */}
+                <div className="mt-8 pt-6 border-t border-slate-100/50">
+                  <motion.button 
+                    whileTap={{ scale: 0.95 }}
+                    onClick={() => addToCart(p)}
+                    className="w-full h-14 rounded-2xl bg-slate-950 text-white flex items-center justify-center gap-3 font-black text-[10px] uppercase tracking-widest hover:bg-red-500 transition-all duration-500 shadow-xl group/btn"
+                  >
+                    <Plus size={18} strokeWidth={3} className="group-hover/btn:rotate-90 transition-transform" />
+                    ADD TO SELECTION
+                  </motion.button>
                 </div>
               </motion.div>
             ))}
@@ -130,23 +123,32 @@ export default function Wishlist() {
         </div>
 
         {/* --- FOOTER ACTION --- */}
-        <div className="mt-24 pt-12 border-t border-slate-200 flex flex-col md:flex-row items-center justify-between gap-8">
-          <Link to="/shop" className="group flex items-center gap-4 text-[11px] font-black uppercase tracking-[0.4em] text-slate-400 hover:text-slate-900 transition-all">
-            <ChevronLeft size={18} className="group-hover:-translate-x-2 transition-transform" /> 
-            Continue Strategic Procurement
+        <div className="mt-24 pt-12 border-t border-slate-100 flex flex-col md:flex-row items-center justify-between gap-10">
+          <Link to="/shop" className="group flex items-center gap-4 text-[11px] font-black uppercase tracking-[0.2em] text-slate-400 hover:text-slate-900 transition-all">
+            <div className="h-10 w-10 rounded-full border border-slate-100 flex items-center justify-center group-hover:border-slate-900 transition-colors">
+               <ChevronLeft size={18} className="group-hover:-translate-x-1 transition-transform" /> 
+            </div>
+            Continue Browsing Catalog
           </Link>
-          <div className="flex items-center gap-10">
+          <div className="flex items-center gap-10 opacity-60">
              <div className="flex items-center gap-3">
                 <ShieldCheck size={18} className="text-blue-600" />
-                <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Authorized Listings Only</span>
+                <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Authorized Listings</span>
              </div>
              <div className="flex items-center gap-3">
                 <Sparkles size={18} className="text-blue-600" />
-                <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Global Logistics Active</span>
+                <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Global Support</span>
              </div>
           </div>
         </div>
       </div>
+
+      <style>{`
+        .stroke-text-light {
+          -webkit-text-stroke: 2px #0f172a;
+          color: transparent;
+        }
+      `}</style>
     </div>
   );
 }
