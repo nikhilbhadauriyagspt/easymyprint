@@ -1,4 +1,6 @@
-import Hero from "@/components/Hero";
+// import Hero from "@/components/Hero";
+import Hero2 from "@/components/Hero2";
+import Content from "@/components/Content";
 import SEO from "@/components/SEO";
 import Features from "@/components/Features";
 import Collections from "@/components/Collections";
@@ -88,7 +90,9 @@ export default function Home() {
         description="Premium destination for authorized HP printers, precision tech, and essential accessories. Delivering excellence in tech solutions across the USA."
       />
       
-      <Hero />
+      {/* <Hero /> */}
+      <Hero2 />
+      <Content />
       <Features />
       <ShopByCategory categories={data.categories} />
       <Collections />
