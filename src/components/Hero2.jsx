@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 
 const Hero2 = () => {
   return (
-    <section className="relative w-full h-[30vh] xs:h-[35vh] pt-10 sm:h-[45vh] md:h-[65vh] lg:h-[80vh] xl:h-[85vh] overflow-hidden bg-slate-50">
+    <section className="relative w-full h-[30vh] xs:h-[35vh]  sm:h-[45vh] md:h-[65vh] lg:h-[80vh] xl:h-[85vh] overflow-hidden bg-slate-50">
       <motion.div 
         initial={{ opacity: 0, scale: 1.02 }}
         animate={{ opacity: 1, scale: 1 }}
