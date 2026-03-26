@@ -177,15 +177,24 @@ export default function Header() {
     <>
       <header 
         className={cn(
-          "fixed top-0 left-0 w-full z-[100] transition-all duration-500 font-urbanist py-2 bg-white/80 backdrop-blur-xl border-b border-slate-200/50 shadow-[0_8px_30px_rgb(0,0,0,0.04)]"
+          "fixed top-0 left-0 w-full z-[100] transition-all duration-500 font-urbanist py-1 lg:py-1.5 bg-white/80 backdrop-blur-xl border-b border-slate-200/50 shadow-[0_8px_30px_rgb(0,0,0,0.04)]"
         )}
       >
-        <div className="max-w-[1920px] mx-auto px-6 md:px-10 lg:px-12 relative">
+        <div className="max-w-[1920px] mx-auto px-4 md:px-10 lg:px-12 relative">
           <div className="flex items-center justify-between gap-4">
             
-            {/* --- LEFT: NAV & TRUST --- */}
-            <div className="flex-1 flex items-center justify-start gap-10">
-              <nav className="hidden xl:flex items-center gap-1 p-1 bg-slate-100/50 backdrop-blur-md rounded-full border border-slate-200/50 shadow-inner h-12">
+            {/* --- MOBILE LOGO AREA --- */}
+            <Link to="/" className="lg:hidden flex items-center gap-3 relative z-10 py-1.5">
+              <img 
+                src="/logo/EASYMYPRINT.png" 
+                alt="EASYMYPRINT" 
+                className="h-7 w-auto object-contain" 
+              />
+            </Link>
+
+            {/* --- LEFT: NAV & TRUST (DESKTOP ONLY) --- */}
+            <div className="hidden lg:flex flex-1 items-center justify-start gap-4 xl:gap-10">
+              <nav className="flex items-center gap-0.5 p-1 bg-slate-100/50 backdrop-blur-md rounded-full border border-slate-200/50 shadow-inner h-10 xl:h-12">
                 {[
                   { name: 'Home', path: '/', icon: <Home size={14} /> },
                   { name: 'Store', path: '/shop' },
@@ -199,7 +208,7 @@ export default function Header() {
                       key={link.name} 
                       to={link.path} 
                       className={cn(
-                        "px-5 py-2 h-full text-[11px] font-bold tracking-[0.15em] uppercase transition-all duration-300 rounded-full flex items-center gap-2 group relative",
+                        "px-3 xl:px-5 py-2 h-full text-[10px] xl:text-[11px] font-bold tracking-[0.1em] xl:tracking-[0.15em] uppercase transition-all duration-300 rounded-full flex items-center gap-2 group relative",
                         isActive 
                           ? "bg-white text-blue-600 shadow-sm" 
                           : "text-slate-500 hover:text-slate-900 hover:bg-white/50"
@@ -212,7 +221,7 @@ export default function Header() {
               </nav>
 
               {/* HP PREMIUM TRUST BADGE */}
-              <div className="hidden min-[1450px]:flex items-center gap-4 px-5 h-12 bg-gradient-to-r from-slate-50 to-white border border-slate-200 rounded-full shadow-sm hover:shadow-md transition-all duration-500 group/hp cursor-default shrink-0 ml-auto">
+              <div className="hidden 2xl:flex items-center gap-4 px-5 h-12 bg-gradient-to-r from-slate-50 to-white border border-slate-200 rounded-full shadow-sm hover:shadow-md transition-all duration-500 group/hp cursor-default shrink-0 ml-auto">
                  <div className="relative">
                     <div className="h-7 w-7 bg-white p-1 flex items-center justify-center rounded-lg shadow-inner border border-slate-100 group-hover/hp:border-blue-300 transition-colors duration-500">
                        <img src="/brands/hp.png" alt="HP" className="w-full h-full object-contain" />
@@ -226,41 +235,41 @@ export default function Header() {
               </div>
             </div>
 
-            {/* --- CENTER: LOGO & PRIME FIX (FLOATING PENDANT) --- */}
-            <div className="flex-shrink-0 relative group/pendant mt-2 mx-12">
+            {/* --- CENTER: LOGO & PRIME FIX (DESKTOP ONLY) --- */}
+            <div className="hidden lg:block flex-shrink-0 relative group/pendant mt-1 mx-4 xl:mx-12">
               <div className={cn(
-                "absolute top-[-50px] left-1/2 -translate-x-1/2 w-[125%] h-[190%] bg-white rounded-b-[4.5rem] shadow-[0_25px_50px_rgba(0,0,0,0.08)] border-x border-b border-slate-100 transition-all duration-700",
+                "absolute top-[-50px] left-1/2 -translate-x-1/2 w-[125%] h-[170%] xl:h-[190%] bg-white rounded-b-[4.5rem] shadow-[0_25px_50px_rgba(0,0,0,0.08)] border-x border-b border-slate-100 transition-all duration-700",
                 "group-hover/pendant:h-[200%] group-hover/pendant:shadow-[0_30px_60px_rgba(37,99,235,0.12)] group-hover/pendant:border-blue-100"
               )} />
               
               <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-40 h-40 bg-blue-400/10 blur-[70px] rounded-full opacity-0 group-hover/pendant:opacity-100 transition-opacity duration-700" />
 
-              <Link to="/" className="relative flex items-center gap-6 px-8 pt-4 pb-3 mt-1">
+              <Link to="/" className="relative flex items-center gap-2 xl:gap-6 px-4 xl:px-8 pt-2.5 pb-2 xl:pt-4 xl:pb-3 mt-1">
                 <div className="relative">
                   <img 
                     src="/logo/EASYMYPRINT.png" 
                     alt="EASYMYPRINT" 
-                    className="h-9 lg:h-12 w-auto object-contain transition-all duration-700 group-hover/pendant:scale-110 group-hover/pendant:rotate-[-2deg]" 
+                    className="h-8 xl:h-12 w-auto object-contain transition-all duration-700 group-hover/pendant:scale-110 group-hover/pendant:rotate-[-2deg]" 
                   />
                 </div>
                 
-                <div className="h-12 w-px bg-gradient-to-b from-transparent via-slate-200 to-transparent hidden sm:block" />
-                
-                <div className="hidden sm:flex flex-col justify-center leading-none">
+                <div className="h-10 w-px bg-gradient-to-b from-transparent via-slate-200 to-transparent hidden 2xl:block" />
+                <div className="hidden 2xl:flex flex-col justify-center  leading-none">
                   <span className="text-[8px] font-black text-slate-400 uppercase tracking-widest">A Subsidiary of</span>
                   <span className="text-[11px] font-black text-slate-900 uppercase tracking-tight mt-1">PrimeFix Solutions</span>
                 </div>
-              </Link>
+                
+                </Link>
             </div>
 
             {/* --- RIGHT: ACTIONS (REFINED PREMIUM HUB) --- */}
-            <div className="flex-1 flex items-center justify-end gap-10">
+            <div className="flex-1 flex items-center justify-end gap-2 lg:gap-4 xl:gap-10">
               
-              {/* DEPARTMENTS - SYMMETRICAL TO HP BADGE */}
+              {/* DEPARTMENTS - ONLY ON 2XL+ */}
               <button 
                 onMouseEnter={() => setActiveDropdown('categories')}
                 className={cn(
-                  "hidden lg:flex items-center gap-2.5 px-6 h-12 rounded-full transition-all duration-500 text-[11px] font-black tracking-[0.15em] uppercase border-2 group/dept relative overflow-hidden mr-auto",
+                  "hidden 2xl:flex items-center gap-2.5 px-6 h-12 rounded-full transition-all duration-500 text-[11px] font-black tracking-[0.15em] uppercase border-2 group/dept relative overflow-hidden mr-auto",
                   activeDropdown === 'categories' 
                     ? "bg-slate-900 border-slate-900 text-white shadow-lg" 
                     : "bg-white border-slate-100 text-slate-900 hover:border-blue-600 hover:text-blue-600 shadow-sm"
@@ -270,10 +279,10 @@ export default function Header() {
                  <span>Departments</span>
               </button>
 
-              <div className="flex items-center gap-3 bg-slate-100/50 backdrop-blur-md p-1.5 rounded-full border border-slate-200/50 shadow-inner">
+              <div className="flex items-center gap-1 sm:gap-2 xl:gap-3 bg-slate-100/50 backdrop-blur-md p-1 sm:p-1.5 rounded-full border border-slate-200/50 shadow-inner">
                 
                 {/* INLINE SEARCH */}
-                <div className="hidden lg:flex items-center relative group/search min-w-[180px] xl:min-w-[240px]">
+                <div className="hidden lg:flex items-center relative group/search min-w-[150px] xl:min-w-[240px]">
                    <Search className="absolute left-4 text-slate-400 group-focus-within/search:text-blue-600 transition-colors" size={14} strokeWidth={2.5} />
                    <input 
                      type="text" 
@@ -342,7 +351,7 @@ export default function Header() {
 
                 <button 
                   onClick={() => setIsSidebarOpen(true)}
-                  className="xl:hidden h-10 w-10 flex items-center justify-center bg-slate-900 text-white rounded-full ml-1 active:scale-95 shadow-lg shadow-slate-900/20"
+                  className="lg:hidden h-10 w-10 flex items-center justify-center bg-slate-900 text-white rounded-full ml-1 active:scale-95 shadow-lg shadow-slate-900/20"
                 >
                   <LayoutGrid size={18} />
                 </button>
@@ -594,21 +603,17 @@ export default function Header() {
             <motion.div 
               initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
               onClick={() => setIsSidebarOpen(false)}
-              className="fixed inset-0 z-[200] bg-slate-950/20 backdrop-blur-md xl:hidden"
+              className="fixed inset-0 z-[200] bg-slate-950/20 backdrop-blur-md lg:hidden"
             />
             <motion.div 
               initial={{ x: '-100%' }} animate={{ x: 0 }} exit={{ x: '-100%' }}
               transition={{ type: "spring", damping: 25, stiffness: 200 }}
-              className="fixed top-0 left-0 h-full w-[320px] bg-white z-[210] shadow-2xl xl:hidden flex flex-col font-urbanist"
+              className="fixed top-0 left-0 h-full w-[320px] bg-white z-[210] shadow-2xl lg:hidden flex flex-col font-urbanist"
             >
               <div className="p-8 border-b border-slate-100 flex justify-between items-center bg-slate-50/50">
                 <Link to="/" onClick={() => setIsSidebarOpen(false)} className="flex items-center gap-4">
                   <img src="/logo/EASYMYPRINT.png" alt="EASYMYPRINT" className="h-9 w-auto object-contain" />
-                  <div className="h-6 w-px bg-slate-200" />
-                  <div className="flex flex-col justify-center leading-none">
-                    <span className="text-[8px] font-black text-slate-400 uppercase tracking-widest">A Subsidiary of</span>
-                    <span className="text-[11px] font-black text-slate-900 uppercase tracking-tight mt-1">PrimeFix Solutions</span>
-                  </div>
+                 
                 </Link>
                 <button onClick={() => setIsSidebarOpen(false)} className="h-10 w-10 rounded-xl bg-white flex items-center justify-center text-slate-900 border border-slate-100 shadow-sm">
                   <X size={20} />
