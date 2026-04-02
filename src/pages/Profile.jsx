@@ -21,7 +21,8 @@ import {
   Terminal,
   Activity,
   Box,
-  ArrowRight
+  ArrowRight,
+  Calendar
 } from 'lucide-react';
 import { cn } from '../lib/utils';
 import SEO from '@/components/SEO';
@@ -152,9 +153,9 @@ export default function Profile() {
                 <div className="absolute -inset-4 bg-blue-600/5 blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
                 <div className="relative z-10 flex flex-col items-center">
                    <div className="h-24 w-20 bg-slate-950 flex items-center justify-center text-white text-4xl font-black shadow-2xl rounded-2xl mb-8 uppercase tracking-tighter">
-                     {user.name.charAt(0)}
+                     {user.name?.charAt(0) || 'U'}
                    </div>
-                   <h2 className="text-2xl font-black text-slate-900 uppercase tracking-tighter leading-none mb-2">{user.name}</h2>
+                   <h2 className="text-2xl font-black text-slate-900 uppercase tracking-tighter leading-none mb-2">{user.name || 'Member'}</h2>
                    <p className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.3em]">{user.email}</p>
                 </div>
               </div>
